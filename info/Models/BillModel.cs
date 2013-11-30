@@ -100,9 +100,9 @@ namespace www.Models
                 abbr.Add(new KeyValuePair<string, string>(@"(?<=([0-9]{1}))AM\b", " Committee members have Amended"));
 
                 //Where is the bill?
-                abbr.Add(new KeyValuePair<string, string>(@"^[(]H[)]", "House action, "));
+                abbr.Add(new KeyValuePair<string, string>(@"^[(]H[)]", "House Action, "));
                 abbr.Add(new KeyValuePair<string, string>(@"[(]H[)]", "House "));
-                abbr.Add(new KeyValuePair<string, string>(@"(?<![DATE|COSPONSOR|\s])[(]S[)]", "Senate action, "));
+                abbr.Add(new KeyValuePair<string, string>(@"(?<![DATE|COSPONSOR|\s])[(]S[)]", "Senate Action, "));
                 abbr.Add(new KeyValuePair<string, string>(@"(?<=[\s])[(]S[)]", "Senate "));
 
                 //Bill Idenfication
@@ -188,8 +188,10 @@ namespace www.Models
                 foreach (KeyValuePair<string, string> r in abbr.ToList())
                     if (_Description != null)
                         _Description = Regex.Replace(_Description, r.Key, r.Value);
+                
+                return _Description;
 
-                return _Description.ToLower();
+                //return _Description.ToLower();
             }
             set { _Description = value; }
         }

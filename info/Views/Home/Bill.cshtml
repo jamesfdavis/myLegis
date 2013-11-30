@@ -339,9 +339,25 @@
             -moz-border-image: url(/content/img/speech_bubble_right.png) 7 11 5 5 stretch stretch;
             -webkit-border-image: url(/content/img/speech_bubble_right.png) 7 11 5 5 stretch stretch;
         }
+        
+        #contextMenu
+        {
+            position: absolute;
+            display: none;
+        }
     </style>
 }
-<div class="container">
+<div id="contextMenu" class="dropdown clearfix">
+    <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu" style="display: block;
+        position: static; margin-bottom: 5px;">
+        <li><a tabindex="-1" href="#">Action</a></li>
+        <li><a tabindex="-1" href="#">Another action</a></li>
+        <li><a tabindex="-1" href="#">Something else here</a></li>
+        <li class="divider"></li>
+        <li><a tabindex="-1" href="#">Separated link</a></li>
+    </ul>
+</div>
+<div class="container" data-bind="event: { contextmenu: ContextMenuClick }">
     <!-- Static navbar -->
     <div class="navbar navbar-default" role="navigation">
         <div class="navbar-header">
@@ -531,15 +547,17 @@
     </div>*@
     <div class="footer">
         @Html.Partial("_footer")
+        <a href="#" id="myText">Selected Text</a>
     </div>
 </div>
 <!-- /container -->
 @section scripts {
+    @Scripts.Render("~/bundles/bill")
     <script type="text/javascript">
-        $(document).ready(function () {
-            // Handler for .ready() called.
-            $('.commentArea > div:odd').addClass('bubbledRight');
-            $('.commentArea > div:even').addClass('bubbledLeft');
-        });
+       
+
+
+
+
     </script>
 }
