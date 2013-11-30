@@ -1,0 +1,18 @@
+﻿@using www.Models;
+
+@model List<www.Models.SessionList>
+
+@foreach (SessionList l in Model.ToList())
+{
+    foreach (ItemOverview b in l.Bills.OrderBy(n => n.Name))
+    {
+    <a href="@Url.Action("Bill", new { id = @b.Location })" class="list-group-item">
+        <h5 class="list-group-item-heading">
+            @Html.Raw(b.Title)</h5>
+        <span class="badge badge-primary">@b.Name</span>
+        <p class="list-group-item-text">
+            &nbsp;
+        </p>
+    </a>
+    }
+}

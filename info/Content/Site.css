@@ -1,0 +1,13 @@
+﻿.panel-default
+{
+    width: 100%;
+}
+
+.minuteTimeStamp
+{
+    display: block;
+    margin-bottom: -25px;
+    padding-top: 2px;
+    font-family: Courier;
+    color: #999;
+}

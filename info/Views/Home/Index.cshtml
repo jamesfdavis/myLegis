@@ -1,0 +1,68 @@
+﻿@model List<www.Models.SessionList>
+@{
+    ViewBag.Title = "myLegis";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    
+}
+@section css {
+    @Styles.Render("~/Content/narrowjumbo")
+}
+<div class="container">
+    <!-- Static navbar -->
+    <div class="navbar navbar-default" role="navigation">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="sr-only">Toggle navigation</span> <span class="icon-bar"></span><span
+                    class="icon-bar"></span><span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#">myLegis</a>
+        </div>
+        <div class="navbar-collapse collapse">
+            <ul class="nav navbar-nav">
+                <li class="active"><a href="@Url.Action("Index")">Home</a></li>
+                <li><a href="@Url.Action("Senate")">Senate Legislation</a></li>
+                <li><a href="@Url.Action("House")">House Legislation</a></li>
+            </ul>
+        </div>
+        <!--/.nav-collapse -->
+    </div>
+    <ol class="breadcrumb">
+        <li class="active">Home</li>
+    </ol>
+    <div class="row marketing">
+        <div class="col-lg-6">
+            <h4>
+                Subheading</h4>
+            <p>
+                Donec id elit non mi porta gravida at eget metus. Maecenas faucibus mollis interdum.</p>
+            <h4>
+                Subheading</h4>
+            <p>
+                Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Cras mattis consectetur
+                purus sit amet fermentum.</p>
+            <h4>
+                Subheading</h4>
+            <p>
+                Maecenas sed diam eget risus varius blandit sit amet non magna.</p>
+        </div>
+        <div class="col-lg-6">
+            <h4>
+                Subheading</h4>
+            <p>
+                Donec id elit non mi porta gravida at eget metus. Maecenas faucibus mollis interdum.</p>
+            <h4>
+                Subheading</h4>
+            <p>
+                Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Cras mattis consectetur
+                purus sit amet fermentum.</p>
+            <h4>
+                Subheading</h4>
+            <p>
+                Maecenas sed diam eget risus varius blandit sit amet non magna.</p>
+        </div>
+    </div>
+    <div class="footer">
+        @Html.Partial("_footer")
+    </div>
+</div>
+<!-- /container -->

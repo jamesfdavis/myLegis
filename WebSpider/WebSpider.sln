@@ -1,0 +1,42 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebSpider", "WebSpider.csproj", "{375170F1-93C7-410E-A5F2-DB4D51F1AABB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebSpiderTest", "..\WebSpiderTest\WebSpiderTest.csproj", "{770FC972-81F5-4B73-A58A-717964F0BB9A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SpiderTest", "SpiderTest\SpiderTest.csproj", "{DB48DDB0-3E7E-4A44-804C-BFBDC5566018}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{9D5B1693-290E-4805-BE7F-04EFD4AAF878}"
+	ProjectSection(SolutionItems) = preProject
+		Local.testsettings = Local.testsettings
+		TraceAndTestImpact.testsettings = TraceAndTestImpact.testsettings
+		WebSpider.vsmdi = WebSpider.vsmdi
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(TestCaseManagementSettings) = postSolution
+		CategoryFile = WebSpider.vsmdi
+	EndGlobalSection
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{375170F1-93C7-410E-A5F2-DB4D51F1AABB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{375170F1-93C7-410E-A5F2-DB4D51F1AABB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{375170F1-93C7-410E-A5F2-DB4D51F1AABB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{375170F1-93C7-410E-A5F2-DB4D51F1AABB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{770FC972-81F5-4B73-A58A-717964F0BB9A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{770FC972-81F5-4B73-A58A-717964F0BB9A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{770FC972-81F5-4B73-A58A-717964F0BB9A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{770FC972-81F5-4B73-A58A-717964F0BB9A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DB48DDB0-3E7E-4A44-804C-BFBDC5566018}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DB48DDB0-3E7E-4A44-804C-BFBDC5566018}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DB48DDB0-3E7E-4A44-804C-BFBDC5566018}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DB48DDB0-3E7E-4A44-804C-BFBDC5566018}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

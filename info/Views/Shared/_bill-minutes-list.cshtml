@@ -1,0 +1,50 @@
+﻿@using www.Models;
+@model List<www.Models.BillMinutes>
+<div class="panel-group" id="accordion">
+    @foreach (BillMinutes l in Model.ToList())
+    {
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h4 class="panel-title">
+                    <a data-toggle="collapse" data-parent="#accordion" 
+                    href="#@(String.IsNullOrEmpty(l.Begin_Line) ? "empty" : l.Begin_Line + l.End_Line)">
+                        @l.Committee_Name Meeting at @l.DateTime.ToLongTimeString()
+                        <span class="glyphicon glyphicon-comment pull-right"></span></a>
+                </h4>
+            </div>
+            <div id="@(String.IsNullOrEmpty(l.Begin_Line) ? "empty" : l.Begin_Line + l.End_Line)" class="panel-collapse collapse">
+                <div class="panel-body">
+                    <div class="commentArea">
+                        <h4>@l.Title</h4>
+                        <!--  Audio files -->
+                        @if (!String.IsNullOrEmpty(l.Audio_Url))
+                        {
+                            <p style="text-align: right; display: block; width: 95%;">
+                                <a href="http://www.legis.state.ak.us/basis/@l.Audio_Url"><span class="glyphicon glyphicon-headphones">
+                                </span>&nbsp;Audio</a>
+                            </p>
+                        }
+                        <!--  Source Minutes -->
+                        @if (!String.IsNullOrEmpty(l.Minutes_Url))
+                        {
+                            <p style="text-align: right; display: block; width: 95%;">
+                                <a href="http://www.legis.state.ak.us/basis/@l.Minutes_Url"><span class="glyphicon glyphicon-file">
+                                </span>&nbsp;Original</a>
+                            </p>
+                        }
+                        <!--  Line by Line of Minutes -->
+                        @foreach (LineItem item in l.LineItems.Where(n => n.Copy.Length >= 3))
+                        {
+                            <div style="margin-top: 28px;">
+                                @item.Copy
+                                <span class="minuteTimeStamp">
+                                    @item.Time
+                                </span>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+</div>
