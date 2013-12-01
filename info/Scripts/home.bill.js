@@ -14,22 +14,28 @@ $(document).ready(function () {
     var $contextMenu = $("#contextMenu");
 
     //Knockout Modal
-    var viewModel = {
-        CopyText: ko.observable(),
-        rightClick: function (data, event) {
+    var viewModel = function () {
+
+        //Properties
+        this.Person = ko.observable();
+        this.NonGovOrg = ko.observable();
+        this.CopyText = ko.observable();
+
+        //Methods
+        this.rightClick = function (data, event) {
 
             var self = this;
 
             if (window.getSelection) {
-                self.CopyText = window.getSelection().toString();
+                self.CopyText(window.getSelection().toString());
             } else if (document.selection && document.selection.type != "Control") {
-                self.CopyText = document.selection.createRange().text;
+                self.CopyText(document.selection.createRange().text);
             }
 
-            console.info('running right click!');
+            console.info('Right-click Copy for: ' + this.CopyText());
 
             //Check for text selection
-            if (self.CopyText.length != 0) {
+            if (self.CopyText().length != 0) {
                 //Show menu
                 $contextMenu.css({
                     display: 'block',
@@ -42,21 +48,53 @@ $(document).ready(function () {
                 $contextMenu.css({ display: 'none' });
             }
         },
-        selectCopy: function (data, event) {
+        this.selectCopy = function (data, event) {
             var self = this;
-
-            //Workaround
-            $('#modCopy').html(function () { return self.CopyText });
 
             //Hide subcontext menu.
             $contextMenu.css({ display: 'none' });
-
+            //Show tab
+            $('#modCopyTabs a[href="#home"]').tab('show');
             //Show modal
-            $('#myModal').modal('show');
+            $('#modCopyTool').modal('show');
+
+        },
+        this.selectPerson = function (data, event) {
+            var self = this;
+
+            //Hide subcontext menu.
+            $contextMenu.css({ display: 'none' });
+            //Show tab
+            $('#modCopyTabs a[href="#person"]').tab('show');
+            //Show modal
+            $('#modCopyTool').modal('show');
+
+        },
+        this.selectNGO = function (data, event) {
+            var self = this;
+
+            //Hide subcontext menu.
+            $contextMenu.css({ display: 'none' });
+            //Show tab
+            $('#modCopyTabs a[href="#nongovorg"]').tab('show');
+            //Show modal
+            $('#modCopyTool').modal('show');
+
+        },
+        this.selectNewsletter = function (data, event) {
+            var self = this;
+
+            //Hide subcontext menu.
+            $contextMenu.css({ display: 'none' });
+            //Show tab
+            $('#modCopyTabs a[href="#newsletter"]').tab('show');
+            //Show modal
+            $('#modCopyTool').modal('show');
 
         }
+        
     };
 
-    ko.applyBindings(viewModel);
+    ko.applyBindings(new viewModel());
 
 });

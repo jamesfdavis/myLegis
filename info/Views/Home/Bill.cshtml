@@ -13,46 +13,100 @@
         }
     </style>
 }
+<!-- modal -->
+<div class="modal fade" id="modCopyTool" tabindex="-1" role="dialog" aria-labelledby="modCopyToolLabel"
+    aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                    &times;</button>
+                <h4 class="modal-title" id="modCopyToolLabel">
+                    Selected Copy Tool</h4>
+            </div>
+            <div class="modal-body">
+                <form class="form-horizontal" role="form">
+                <div class="form-group">
+                    <label for="selectedText" class="col-sm-2 control-label">
+                        Selected</label>
+                    <div class="col-sm-10">
+                        <input type="text" id="selectedText" class="form-control" data-bind="value : CopyText()"
+                            disabled />
+                    </div>
+                </div>
+                <!-- Nav tabs -->
+                <div class="form-group">
+                    <ul class="nav nav-tabs" id="modCopyTabs">
+                        <li class="active"><a href="#home" class="glyphicon glyphicon-home" data-toggle="tab">
+                            &nbsp;Home</a></li>
+                        <li><a href="#person" class="glyphicon glyphicon-user" data-toggle="tab">&nbsp;Person</a></li>
+                        <li><a href="#nongovorg" class="glyphicon glyphicon-briefcase" data-toggle="tab">&nbsp;NGO</a></li>
+                        <li><a href="#newsletter" class="glyphicon glyphicon-pencil" data-toggle="tab">&nbsp;Newsletter</a></li>
+                    </ul>
+                </div>
+                <!-- Tab panes -->
+                <div class="tab-content" style="padding-top: 5px;">
+                    <div class="tab-pane active" id="home">
+                        <div class="form-group">
+                            <p>
+                                Here is the home tab.</p>
+                        </div>
+                    </div>
+                    <div class="tab-pane" id="person">
+                        <div class="form-group">
+                            <label for="inpPerson" class="col-sm-2 control-label">
+                                Person</label>
+                            <div class="col-sm-10">
+                                <input id="inpPerson" type="text" data-bind="value : Person" class="form-control" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-pane" id="nongovorg">
+                        <div class="form-group">
+                            <label for="inpNGO" class="col-sm-2 control-label">
+                                NGO</label>
+                            <div class="col-sm-10">
+                                <input id="inpNGO" type="text" data-bind="value : NonGovOrg" class="form-control" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-pane" id="newsletter">
+                        <div class="form-group">
+                            <p>
+                                Newsletter stuff: (<a href="https://developer.constantcontact.com/libraries/libraries.html">Constant
+                                    Contact)</a>, (<a href="https://github.com/constantcontact/.net-sdk">GitHub</a>)</p>
+                        </div>
+                    </div>
+                </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">
+                    Close</button>
+                <button type="button" class="btn btn-primary">
+                    Save changes</button>
+            </div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+<!-- /.modal -->
+<!-- container -->
 <div class="container">
-
     <!-- context menu -->
     <div id="contextMenu" class="dropdown clearfix">
         <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu" style="display: block;
             position: static; margin-bottom: 5px;">
-            <li><a tabindex="-1" href="#" data-bind="click : selectCopy">Copy Selection</a></li>
+            <li><a tabindex="-1" href="#" data-bind="click : selectCopy">Copy and Find</a></li>
+            <li><a tabindex="-1" href="#" data-bind="click : selectPerson">Copy to Person</a></li>
+            <li><a tabindex="-1" href="#" data-bind="click : selectNGO">Copy to NGO</a></li>
+            <li><a tabindex="-1" href="#" data-bind="click : selectNewsletter">Copy to Newsletter</a></li>
             <li class="divider"></li>
             <li><a tabindex="-1" href="#">Separated link</a></li>
         </ul>
     </div>
     <!-- /.context -->
-
-    <!-- Modal -->
-    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
-        aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
-                        &times;</button>
-                    <h4 class="modal-title" id="myModalLabel" data-bind="text: CopyText">
-                        Modal title</h4>
-                </div>
-                <div class="modal-body">
-                    <span id="modCopy"></span>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">
-                        Close</button>
-                    <button type="button" class="btn btn-primary">
-                        Save changes</button>
-                </div>
-            </div>
-            <!-- /.modal-content -->
-        </div>
-        <!-- /.modal-dialog -->
-    </div>
-    <!-- /.modal -->
-
     <!-- navbar -->
     <div class="navbar navbar-default" role="navigation">
         <div class="navbar-header">
@@ -72,7 +126,6 @@
         <!--/.nav-collapse -->
     </div>
     <!-- /.navbar -->
-
     <!-- breadcrumb -->
     <ol class="breadcrumb">
         <li><a href="@Url.Action("Index")">Home</a> </li>
@@ -81,7 +134,6 @@
         <li class="active"><span class="badge">@Model.Name</span></li>
     </ol>
     <!-- /.breadcrumb -->
-
     <!-- body -->
     <div class="row">
         <div class="col-md-12" style="margin-top: 5px;">
@@ -140,12 +192,6 @@
                                         </th>
                                     </tr>
                                 </thead>
-                                @*
- * @example <p id="one" class="some_class" data="{item_id: 1, item_label: 'Label'}">This is a p</p>
- * @before $.metadata.setType("attr", "data")
- * @after $("#one").metadata().item_id == 1; $("#one").metadata().item_label == "Label"
- * @desc Reads metadata from a "data" attribute
- *@
                                 <tbody data-bind="event: { contextmenu: rightClick }">
                                     @foreach (var a in Model.Activity.Where(n => n.Date == null))
                                     {
@@ -221,21 +267,19 @@
         </div>
     </div>
     <!-- /.body-->
-
     <!-- footer -->
     <div class="footer">
         @Html.Partial("_footer")
         <a href="#" id="myText">Selected Text</a>
     </div>
     <!-- ./footer -->
-
 </div>
 <!-- /container -->
 @section scripts {
     @Scripts.Render("~/bundles/bill")
     <script type="text/javascript">
         $(document).ready(function () {
-            //$('#myModal').modal();
+            //$('#modCopyTool').modal();
         });
     </script>
 }
