@@ -10,37 +10,51 @@ $(document).ready(function () {
     $('.commentArea > div:odd').addClass('bubbledRight');
     $('.commentArea > div:even').addClass('bubbledLeft');
 
-    $('#myText').click(function (e) {
-        e.preventDefault();
-        viewModel.myFuntion();
-    });
-
+    //Right click menu.
     var $contextMenu = $("#contextMenu");
 
     //Knockout Modal
     var viewModel = {
-        personName: 'Bob',
-        selectedValue: 123,
-        ContextMenuClick: function (data, event) {
+        CopyText: ko.observable(),
+        rightClick: function (data, event) {
 
-            $contextMenu.css({
-                display: 'block',
-                'z-index': 3,
-                left: event.pageX,
-                top: event.pageY
-            });
+            var self = this;
 
-        },
-        getHighlight: function () {
-            var text = "";
             if (window.getSelection) {
-                text = window.getSelection().toString();
+                self.CopyText = window.getSelection().toString();
             } else if (document.selection && document.selection.type != "Control") {
-                text = document.selection.createRange().text;
+                self.CopyText = document.selection.createRange().text;
             }
-            return text;
-        }
 
+            console.info('running right click!');
+
+            //Check for text selection
+            if (self.CopyText.length != 0) {
+                //Show menu
+                $contextMenu.css({
+                    display: 'block',
+                    'z-index': 3,
+                    left: event.pageX,
+                    top: event.pageY
+                });
+            } else {
+                //Hide menu
+                $contextMenu.css({ display: 'none' });
+            }
+        },
+        selectCopy: function (data, event) {
+            var self = this;
+
+            //Workaround
+            $('#modCopy').html(function () { return self.CopyText });
+
+            //Hide subcontext menu.
+            $contextMenu.css({ display: 'none' });
+
+            //Show modal
+            $('#myModal').modal('show');
+
+        }
     };
 
     ko.applyBindings(viewModel);

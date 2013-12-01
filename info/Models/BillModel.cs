@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 
-namespace www.Models
+namespace info.Models
 {
 
     public class SessionList

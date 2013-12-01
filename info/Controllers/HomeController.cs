@@ -6,15 +6,14 @@ using System.Xml.Serialization;
 using System.Web;
 using System.Web.Mvc;
 using System.Text;
-
-using myLegis.Spider.Models;
-using www.Models;
-using myLegis.Spider;
 using System.Text.RegularExpressions;
 using System.Configuration;
+
+using myLegis.Spider.Models;
+using myLegis.Spider;
 using info.Models;
 
-namespace www.Controllers
+namespace info.Controllers
 {
     public class HomeController : Controller
     {
@@ -22,7 +21,7 @@ namespace www.Controllers
         [HttpGet]
         public ActionResult Index()
         {
-
+        
             return View();
 
         }
