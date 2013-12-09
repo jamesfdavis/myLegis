@@ -6,18 +6,75 @@
 
 $(document).ready(function () {
 
-    // Handler for .ready() called.
+    //Style for the minutes bubbles.
     $('.commentArea > div:odd').addClass('bubbledRight');
     $('.commentArea > div:even').addClass('bubbledLeft');
+
+    //Modal dialog form validation
+    $("#frmPerson").validate({
+        rules: {
+            inpFirstName: {
+                required: true
+            }
+        },
+        messages: {
+            inpFirstName: {
+                required : "Required Field"
+            }
+        }
+    });
 
     //Right click menu.
     var $contextMenu = $("#contextMenu");
 
-    //Knockout Modal
+    //Person Model
+    var viewPerson = function () {
+
+        var self = this;
+        self.ID = ko.observable(null);
+        self.FirstName = ko.observable();
+        self.LastName = ko.observable();
+        self.LegisProfile = ko.observable();
+        self.WikiProfile = ko.observable();
+        self.Photo = ko.observable();
+        self.MaintainState = function (copy) {
+
+            $.ajax({
+                type: "POST",
+                cache: false,
+                url: "/api/Person",
+                data: {
+                    ID: "",
+                    FirstName: self.FirstName(),
+                    LastName: self.LastName(),
+                    Copy: copy,
+                    LegisUrl: self.LegisProfile(),
+                    PhotoUrl: self.Photo(),
+                    WikiUrl: self.WikiProfile()
+                },
+                dataType: "json"
+            })
+            .done(function () {
+                //alert("success");
+            }).fail(function () {
+                //alert("error");
+            }).always(function () {
+                //alert("complete");
+            });
+
+            //Save back to the server.
+            console.warn('TODO Save');
+
+        }
+
+    }
+
+    //Knockout Page Model
     var viewModel = function () {
 
         //Properties
-        this.Person = ko.observable();
+        this.Person = new viewPerson();
+        //pending
         this.NonGovOrg = ko.observable();
         this.CopyText = ko.observable();
 
@@ -32,7 +89,7 @@ $(document).ready(function () {
                 self.CopyText(document.selection.createRange().text);
             }
 
-            console.info('Right-click Copy for: ' + this.CopyText());
+            console.info('Right-click Copy:(' + this.CopyText() + ')');
 
             //Check for text selection
             if (self.CopyText().length != 0) {
@@ -65,7 +122,7 @@ $(document).ready(function () {
             //Hide subcontext menu.
             $contextMenu.css({ display: 'none' });
             //Show tab
-            $('#modCopyTabs a[href="#person"]').tab('show');
+            //$('#modCopyTabs a[href="#person"]').tab('show');
             //Show modal
             $('#modCopyTool').modal('show');
 
@@ -76,7 +133,7 @@ $(document).ready(function () {
             //Hide subcontext menu.
             $contextMenu.css({ display: 'none' });
             //Show tab
-            $('#modCopyTabs a[href="#nongovorg"]').tab('show');
+            //$('#modCopyTabs a[href="#nongovorg"]').tab('show');
             //Show modal
             $('#modCopyTool').modal('show');
 
@@ -87,12 +144,32 @@ $(document).ready(function () {
             //Hide subcontext menu.
             $contextMenu.css({ display: 'none' });
             //Show tab
-            $('#modCopyTabs a[href="#newsletter"]').tab('show');
+            //$('#modCopyTabs a[href="#newsletter"]').tab('show');
             //Show modal
             $('#modCopyTool').modal('show');
 
+        },
+        this.saveModal = function (data, event) {
+
+            var self = this;
+            var $btn = $(event.target);
+
+            var $personForm = $("#frmPerson");
+            $personForm.validate();
+
+            //Enable Save
+            $btn.attr("disabled", "");
+
+            //jQuery Validate
+            if (!$personForm.valid()) {
+
+                //Disable Save
+                $btn.attr("disabled", "disabled");
+                this.Person.MaintainState(this.CopyText);
+                $btn.removeAttr("disabled");
+
+            }
         }
-        
     };
 
     ko.applyBindings(new viewModel());

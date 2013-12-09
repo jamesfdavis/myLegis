@@ -4,45 +4,117 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="wwwModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/02/edm/ssdl">
+    <Schema Namespace="www.Model.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/02/edm/ssdl">
         <EntityContainer Name="wwwModelStoreContainer">
-          <EntitySet Name="Person" EntityType="wwwModel.Store.Person" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Person" EntityType="www.Model.Store.Person" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Phrase" EntityType="www.Model.Store.Phrase" store:Type="Tables" Schema="dbo" />
+          <AssociationSet Name="FK_Person_Phrase" Association="www.Model.Store.FK_Person_Phrase">
+            <End Role="Phrase" EntitySet="Phrase" />
+            <End Role="Person" EntitySet="Person" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="Person">
           <Key>
             <PropertyRef Name="ID" />
           </Key>
           <Property Name="ID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
-          <Property Name="Name" Type="varchar" Nullable="false" MaxLength="200" />
-          <Property Name="Copy" Type="varchar" Nullable="false" MaxLength="200" />
+          <Property Name="CopyID" Type="int" Nullable="false" />
+          <Property Name="Session" Type="int" Nullable="false" />
+          <Property Name="FirstName" Type="varchar" MaxLength="75" />
+          <Property Name="LastName" Type="varchar" MaxLength="75" />
+          <Property Name="LegisProfile" Type="varchar" MaxLength="1024" />
+          <Property Name="WikiProfile" Type="varchar" MaxLength="1024" />
+          <Property Name="Photo" Type="image" />
         </EntityType>
-      </Schema>
-    </edmx:StorageModels>
+        <EntityType Name="Phrase">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="Copy" Type="varchar" Nullable="false" MaxLength="1024" />
+        </EntityType>
+        <Association Name="FK_Person_Phrase">
+          <End Role="Phrase" Type="www.Model.Store.Phrase" Multiplicity="1" />
+          <End Role="Person" Type="www.Model.Store.Person" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Phrase">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Person">
+              <PropertyRef Name="CopyID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
-      <Schema Namespace="wwwModel" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2008/09/edm">
-        <EntityContainer Name="wwwEntities" annotation:LazyLoadingEnabled="true">
-          <EntitySet Name="Person" EntityType="wwwModel.Person" />
+      <Schema Namespace="www.Model" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2008/09/edm">
+        <EntityContainer Name="Entities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="People" EntityType="www.Model.Person" />
+          <EntitySet Name="Phrases" EntityType="www.Model.Phrase" />
+          <AssociationSet Name="FK_Person_Phrase" Association="www.Model.FK_Person_Phrase">
+            <End Role="Phrase" EntitySet="Phrases" />
+            <End Role="Person" EntitySet="People" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="Person">
           <Key>
             <PropertyRef Name="ID" />
           </Key>
           <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Name" Type="String" Nullable="false" MaxLength="200" Unicode="false" FixedLength="false" />
-          <Property Name="Copy" Type="String" Nullable="false" MaxLength="200" Unicode="false" FixedLength="false" />
+          <Property Name="CopyID" Type="Int32" Nullable="false" />
+          <Property Name="FirstName" Type="String" MaxLength="75" Unicode="false" FixedLength="false" />
+          <Property Name="LastName" Type="String" MaxLength="75" Unicode="false" FixedLength="false" />
+          <Property Name="Photo" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <NavigationProperty Name="Phrase" Relationship="www.Model.FK_Person_Phrase" FromRole="Person" ToRole="Phrase" />
+          <Property Type="Int32" Name="Session" Nullable="false" />
+          <Property Type="String" Name="LegisProfile" MaxLength="1024" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="WikiProfile" MaxLength="1024" FixedLength="false" Unicode="false" />
         </EntityType>
+        <EntityType Name="Phrase">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Copy" Type="String" Nullable="false" MaxLength="1024" Unicode="false" FixedLength="false" />
+          <NavigationProperty Name="People" Relationship="www.Model.FK_Person_Phrase" FromRole="Phrase" ToRole="Person" />
+        </EntityType>
+        <Association Name="FK_Person_Phrase">
+          <End Role="Phrase" Type="www.Model.Phrase" Multiplicity="1" />
+          <End Role="Person" Type="www.Model.Person" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Phrase">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Person">
+              <PropertyRef Name="CopyID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2008/09/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="wwwModelStoreContainer" CdmEntityContainer="wwwEntities">
-          <EntitySetMapping Name="Person">
-            <EntityTypeMapping TypeName="wwwModel.Person">
+        <EntityContainerMapping StorageEntityContainer="wwwModelStoreContainer" CdmEntityContainer="Entities">
+          <EntitySetMapping Name="People">
+            <EntityTypeMapping TypeName="www.Model.Person">
               <MappingFragment StoreEntitySet="Person">
+                <ScalarProperty Name="WikiProfile" ColumnName="WikiProfile" />
+                <ScalarProperty Name="LegisProfile" ColumnName="LegisProfile" />
+                <ScalarProperty Name="Session" ColumnName="Session" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="CopyID" ColumnName="CopyID" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="Photo" ColumnName="Photo" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Phrases">
+            <EntityTypeMapping TypeName="www.Model.Phrase">
+              <MappingFragment StoreEntitySet="Phrase">
+                <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="Copy" ColumnName="Copy" />
               </MappingFragment>
             </EntityTypeMapping>
@@ -68,7 +140,12 @@
     <!-- Diagram content (shape and connector positions) -->
     <Diagrams>
       <Diagram Name="www">
-        <EntityTypeShape EntityType="wwwModel.Person" Width="1.5" PointX="0.75" PointY="0.75" Height="1.59568359375" IsExpanded="true" />
+        <EntityTypeShape EntityType="www.Model.Person" Width="1.5" PointX="3" PointY="1.375" Height="2.7494921875" IsExpanded="true" />
+        <EntityTypeShape EntityType="www.Model.Phrase" Width="1.5" PointX="0.75" PointY="1.375" Height="1.5956835937499996" IsExpanded="true" />
+        <AssociationConnector Association="www.Model.FK_Person_Phrase" ManuallyRouted="false">
+          <ConnectorPoint PointX="2.25" PointY="2.172841796875" />
+          <ConnectorPoint PointX="3" PointY="2.172841796875" />
+        </AssociationConnector>
       </Diagram>
     </Diagrams>
   </Designer>

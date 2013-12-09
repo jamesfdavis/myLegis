@@ -17,6 +17,12 @@ using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
 [assembly: EdmSchemaAttribute()]
+#region EDM Relationship Metadata
+
+[assembly: EdmRelationshipAttribute("www.Model", "FK_Person_Phrase", "Phrase", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(info.Models.Phrase), "Person", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(info.Models.Person), true)]
+
+#endregion
+
 namespace info.Models
 {
     #region Contexts
@@ -24,32 +30,32 @@ namespace info.Models
     /// <summary>
     /// No Metadata Documentation available.
     /// </summary>
-    public partial class wwwEntities : ObjectContext
+    public partial class Entities : ObjectContext
     {
         #region Constructors
     
         /// <summary>
-        /// Initializes a new wwwEntities object using the connection string found in the 'wwwEntities' section of the application configuration file.
+        /// Initializes a new Entities object using the connection string found in the 'Entities' section of the application configuration file.
         /// </summary>
-        public wwwEntities() : base("name=wwwEntities", "wwwEntities")
+        public Entities() : base("name=Entities", "Entities")
         {
             this.ContextOptions.LazyLoadingEnabled = true;
             OnContextCreated();
         }
     
         /// <summary>
-        /// Initialize a new wwwEntities object.
+        /// Initialize a new Entities object.
         /// </summary>
-        public wwwEntities(string connectionString) : base(connectionString, "wwwEntities")
+        public Entities(string connectionString) : base(connectionString, "Entities")
         {
             this.ContextOptions.LazyLoadingEnabled = true;
             OnContextCreated();
         }
     
         /// <summary>
-        /// Initialize a new wwwEntities object.
+        /// Initialize a new Entities object.
         /// </summary>
-        public wwwEntities(EntityConnection connection) : base(connection, "wwwEntities")
+        public Entities(EntityConnection connection) : base(connection, "Entities")
         {
             this.ContextOptions.LazyLoadingEnabled = true;
             OnContextCreated();
@@ -68,29 +74,53 @@ namespace info.Models
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        public ObjectSet<Person> Person
+        public ObjectSet<Person> People
         {
             get
             {
-                if ((_Person == null))
+                if ((_People == null))
                 {
-                    _Person = base.CreateObjectSet<Person>("Person");
+                    _People = base.CreateObjectSet<Person>("People");
                 }
-                return _Person;
+                return _People;
             }
         }
-        private ObjectSet<Person> _Person;
+        private ObjectSet<Person> _People;
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        public ObjectSet<Phrase> Phrases
+        {
+            get
+            {
+                if ((_Phrases == null))
+                {
+                    _Phrases = base.CreateObjectSet<Phrase>("Phrases");
+                }
+                return _Phrases;
+            }
+        }
+        private ObjectSet<Phrase> _Phrases;
 
         #endregion
 
         #region AddTo Methods
     
         /// <summary>
-        /// Deprecated Method for adding a new object to the Person EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
+        /// Deprecated Method for adding a new object to the People EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
         /// </summary>
-        public void AddToPerson(Person person)
+        public void AddToPeople(Person person)
         {
-            base.AddObject("Person", person);
+            base.AddObject("People", person);
+        }
+    
+        /// <summary>
+        /// Deprecated Method for adding a new object to the Phrases EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
+        /// </summary>
+        public void AddToPhrases(Phrase phrase)
+        {
+            base.AddObject("Phrases", phrase);
         }
 
         #endregion
@@ -104,7 +134,7 @@ namespace info.Models
     /// <summary>
     /// No Metadata Documentation available.
     /// </summary>
-    [EdmEntityTypeAttribute(NamespaceName="wwwModel", Name="Person")]
+    [EdmEntityTypeAttribute(NamespaceName="www.Model", Name="Person")]
     [Serializable()]
     [DataContractAttribute(IsReference=true)]
     public partial class Person : EntityObject
@@ -115,14 +145,14 @@ namespace info.Models
         /// Create a new Person object.
         /// </summary>
         /// <param name="id">Initial value of the ID property.</param>
-        /// <param name="name">Initial value of the Name property.</param>
-        /// <param name="copy">Initial value of the Copy property.</param>
-        public static Person CreatePerson(global::System.Int32 id, global::System.String name, global::System.String copy)
+        /// <param name="copyID">Initial value of the CopyID property.</param>
+        /// <param name="session">Initial value of the Session property.</param>
+        public static Person CreatePerson(global::System.Int32 id, global::System.Int32 copyID, global::System.Int32 session)
         {
             Person person = new Person();
             person.ID = id;
-            person.Name = name;
-            person.Copy = copy;
+            person.CopyID = copyID;
+            person.Session = session;
             return person;
         }
 
@@ -162,24 +192,269 @@ namespace info.Models
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
         [DataMemberAttribute()]
-        public global::System.String Name
+        public global::System.Int32 CopyID
         {
             get
             {
-                return _Name;
+                return _CopyID;
             }
             set
             {
-                OnNameChanging(value);
-                ReportPropertyChanging("Name");
-                _Name = StructuralObject.SetValidValue(value, false);
-                ReportPropertyChanged("Name");
-                OnNameChanged();
+                OnCopyIDChanging(value);
+                ReportPropertyChanging("CopyID");
+                _CopyID = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("CopyID");
+                OnCopyIDChanged();
             }
         }
-        private global::System.String _Name;
-        partial void OnNameChanging(global::System.String value);
-        partial void OnNameChanged();
+        private global::System.Int32 _CopyID;
+        partial void OnCopyIDChanging(global::System.Int32 value);
+        partial void OnCopyIDChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String FirstName
+        {
+            get
+            {
+                return _FirstName;
+            }
+            set
+            {
+                OnFirstNameChanging(value);
+                ReportPropertyChanging("FirstName");
+                _FirstName = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("FirstName");
+                OnFirstNameChanged();
+            }
+        }
+        private global::System.String _FirstName;
+        partial void OnFirstNameChanging(global::System.String value);
+        partial void OnFirstNameChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String LastName
+        {
+            get
+            {
+                return _LastName;
+            }
+            set
+            {
+                OnLastNameChanging(value);
+                ReportPropertyChanging("LastName");
+                _LastName = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("LastName");
+                OnLastNameChanged();
+            }
+        }
+        private global::System.String _LastName;
+        partial void OnLastNameChanging(global::System.String value);
+        partial void OnLastNameChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.Byte[] Photo
+        {
+            get
+            {
+                return StructuralObject.GetValidValue(_Photo);
+            }
+            set
+            {
+                OnPhotoChanging(value);
+                ReportPropertyChanging("Photo");
+                _Photo = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("Photo");
+                OnPhotoChanged();
+            }
+        }
+        private global::System.Byte[] _Photo;
+        partial void OnPhotoChanging(global::System.Byte[] value);
+        partial void OnPhotoChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 Session
+        {
+            get
+            {
+                return _Session;
+            }
+            set
+            {
+                OnSessionChanging(value);
+                ReportPropertyChanging("Session");
+                _Session = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("Session");
+                OnSessionChanged();
+            }
+        }
+        private global::System.Int32 _Session;
+        partial void OnSessionChanging(global::System.Int32 value);
+        partial void OnSessionChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String LegisProfile
+        {
+            get
+            {
+                return _LegisProfile;
+            }
+            set
+            {
+                OnLegisProfileChanging(value);
+                ReportPropertyChanging("LegisProfile");
+                _LegisProfile = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("LegisProfile");
+                OnLegisProfileChanged();
+            }
+        }
+        private global::System.String _LegisProfile;
+        partial void OnLegisProfileChanging(global::System.String value);
+        partial void OnLegisProfileChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String WikiProfile
+        {
+            get
+            {
+                return _WikiProfile;
+            }
+            set
+            {
+                OnWikiProfileChanging(value);
+                ReportPropertyChanging("WikiProfile");
+                _WikiProfile = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("WikiProfile");
+                OnWikiProfileChanged();
+            }
+        }
+        private global::System.String _WikiProfile;
+        partial void OnWikiProfileChanging(global::System.String value);
+        partial void OnWikiProfileChanged();
+
+        #endregion
+
+    
+        #region Navigation Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("www.Model", "FK_Person_Phrase", "Phrase")]
+        public Phrase Phrase
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Phrase>("www.Model.FK_Person_Phrase", "Phrase").Value;
+            }
+            set
+            {
+                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Phrase>("www.Model.FK_Person_Phrase", "Phrase").Value = value;
+            }
+        }
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [BrowsableAttribute(false)]
+        [DataMemberAttribute()]
+        public EntityReference<Phrase> PhraseReference
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Phrase>("www.Model.FK_Person_Phrase", "Phrase");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<Phrase>("www.Model.FK_Person_Phrase", "Phrase", value);
+                }
+            }
+        }
+
+        #endregion
+
+    }
+    
+    /// <summary>
+    /// No Metadata Documentation available.
+    /// </summary>
+    [EdmEntityTypeAttribute(NamespaceName="www.Model", Name="Phrase")]
+    [Serializable()]
+    [DataContractAttribute(IsReference=true)]
+    public partial class Phrase : EntityObject
+    {
+        #region Factory Method
+    
+        /// <summary>
+        /// Create a new Phrase object.
+        /// </summary>
+        /// <param name="id">Initial value of the ID property.</param>
+        /// <param name="copy">Initial value of the Copy property.</param>
+        public static Phrase CreatePhrase(global::System.Int32 id, global::System.String copy)
+        {
+            Phrase phrase = new Phrase();
+            phrase.ID = id;
+            phrase.Copy = copy;
+            return phrase;
+        }
+
+        #endregion
+
+        #region Primitive Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 ID
+        {
+            get
+            {
+                return _ID;
+            }
+            set
+            {
+                if (_ID != value)
+                {
+                    OnIDChanging(value);
+                    ReportPropertyChanging("ID");
+                    _ID = StructuralObject.SetValidValue(value);
+                    ReportPropertyChanged("ID");
+                    OnIDChanged();
+                }
+            }
+        }
+        private global::System.Int32 _ID;
+        partial void OnIDChanging(global::System.Int32 value);
+        partial void OnIDChanged();
     
         /// <summary>
         /// No Metadata Documentation available.
@@ -208,6 +483,32 @@ namespace info.Models
         #endregion
 
     
+        #region Navigation Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("www.Model", "FK_Person_Phrase", "Person")]
+        public EntityCollection<Person> People
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<Person>("www.Model.FK_Person_Phrase", "Person");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<Person>("www.Model.FK_Person_Phrase", "Person", value);
+                }
+            }
+        }
+
+        #endregion
+
     }
 
     #endregion

@@ -129,13 +129,14 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
-    <Compile Include="Controllers\PersonController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\PersonController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\BillModel.cs" />
     <Compile Include="Models\BillRepo.cs" />
+    <Compile Include="Models\DTO.cs" />
     <Compile Include="Models\www.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
