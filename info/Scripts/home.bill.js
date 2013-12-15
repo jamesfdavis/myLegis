@@ -19,6 +19,7 @@ $(document).ready(function () {
 
     //Modal defaults
     $("#frmError").hide();
+
     //Reset forms.
     $('#modCopyTabs a').click(function (e) {
         e.preventDefault();
@@ -87,29 +88,42 @@ $(document).ready(function () {
         }
     }
 
-    function serverErrors(data) {
-        if (errors) {
-            var message = errors == 1
-        ? 'You missed 1 field. It has been highlighted'
-        : 'You missed ' + errors + ' fields. They have been highlighted';
-            $("#frmError").html(message);
-            $("#frmError").show();
-        } else {
-            $("#frmError").hide();
-        }
-    }
-
     //KO Model - Person
     var viewPerson = function () {
 
         var self = this;
         self.ID = ko.observable(0);
+        self.Copy = ko.observable('');
         self.FirstName = ko.observable();
         self.LastName = ko.observable();
         self.LegisProfile = ko.observable();
         self.WikiProfile = ko.observable();
         self.Photo = ko.observable();
-        self.MaintainState = function (copy) {
+        self.MaintainState = function (data, event) {
+
+            //Grab Selected Copy
+            self.Copy($('#personText').val());
+            
+            var $btn = $(event.target);
+
+            var $personForm = $("#frmPerson");
+            $personForm.validate();
+
+            //Enable Save
+            $btn.removeAttr("disabled");
+
+            //jQuery Validate
+            if ($personForm.valid()) {
+                //Disable Save
+                $btn.attr("disabled", "disabled");
+                //Try to save.
+                self.Save();
+                //Re-enable Save
+                $btn.removeAttr("disabled");
+            }
+
+        }
+        self.Save = function () {
 
             if (self.ID() == 0) {
                 //Try to create the Person
@@ -120,7 +134,7 @@ $(document).ready(function () {
                         ID: self.ID(),
                         FirstName: self.FirstName(),
                         LastName: self.LastName(),
-                        Copy: copy,
+                        Copy: self.Copy(),
                         LegisUrl: self.LegisProfile(),
                         PhotoUrl: self.Photo(),
                         WikiUrl: self.WikiProfile()
@@ -181,16 +195,12 @@ $(document).ready(function () {
             }
         },
         this.selectSearch = function (data, event) {
-            var self = this;
-
             //Hide subcontext menu.
             $contextMenu.css({ display: 'none' });
             //Show tab
             $('#modCopyTabs a[href="#tabCopyHome"]').tab('show');
-
             //Show modal
             $('#modCopyTool').modal('show');
-
         },
         this.selectPerson = function (data, event) {
             var self = this;
@@ -204,6 +214,10 @@ $(document).ready(function () {
             self.Person.WikiProfile('');
             self.Person.LegisProfile('');
             self.Person.Photo('');
+
+            //Selected Copy value to all the sub-objects!
+            //self.Person.Copy(self.CopyText());
+
             //Reset control validation.
             $('.form-group')
                 .children('div', '.has-error')
@@ -244,27 +258,6 @@ $(document).ready(function () {
             $('#modCopyTool').modal('show');
 
         },
-        this.savePerson = function (data, event) {
-
-            var self = this;
-            var $btn = $(event.target);
-
-            var $personForm = $("#frmPerson");
-            $personForm.validate();
-
-            //Enable Save
-            $btn.removeAttr("disabled");
-
-            //jQuery Validate
-            if ($personForm.valid()) {
-                //Disable Save
-                $btn.attr("disabled", "disabled");
-                //Try to save.
-                self.Person.MaintainState(this.CopyText);
-                //Re-enable Save
-                $btn.removeAttr("disabled");
-            }
-        }
 
         //Filter Methods
         this.swapPeople = function () {

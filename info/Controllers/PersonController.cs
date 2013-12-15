@@ -37,31 +37,31 @@ namespace info.Controllers
         //    return person;
         //}
 
-        //// PUT api/Person/5
-        //[HttpPut]
-        //public HttpResponseMessage PutPerson(int id, Person person)
-        //{
-        //    if (ModelState.IsValid && id == person.ID)
-        //    {
-        //        db.People.Attach(person);
-        //        db.ObjectStateManager.ChangeObjectState(person, EntityState.Modified);
+        // PUT api/Person/5
+        [HttpPut]
+        public HttpResponseMessage PutPerson(int id, Person person)
+        {
+            if (ModelState.IsValid && id == person.ID)
+            {
+                //db.People.Attach(person);
+                db.ObjectStateManager.ChangeObjectState(person, EntityState.Modified);
 
-        //        try
-        //        {
-        //            db.SaveChanges();
-        //        }
-        //        catch (DbUpdateConcurrencyException)
-        //        {
-        //            return Request.CreateResponse(HttpStatusCode.NotFound);
-        //        }
+                try
+                {
+                    db.SaveChanges();
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    return Request.CreateResponse(HttpStatusCode.NotFound);
+                }
 
-        //        return Request.CreateResponse(HttpStatusCode.OK);
-        //    }
-        //    else
-        //    {
-        //        return Request.CreateResponse(HttpStatusCode.BadRequest);
-        //    }
-        //}
+                return Request.CreateResponse(HttpStatusCode.OK);
+            }
+            else
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest);
+            }
+        }
 
         // POST api/Person
         [HttpPost]
