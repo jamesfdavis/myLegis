@@ -8,7 +8,7 @@ namespace info.Models.DTO
     public class Person
     {
 
-        public string ID { get; set; }
+        public Int32 ID { get; set; }
         public string Copy { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }

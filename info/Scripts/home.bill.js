@@ -3,6 +3,7 @@
 /// <reference path="jquery.validate.unobtrusive.js" />
 /// <reference path="knockout-3.0.0.debug.js" />
 /// <reference path="modernizr-2.5.3.js" />
+/// <reference path="regex.js" />
 
 $(document).ready(function () {
 
@@ -10,24 +11,68 @@ $(document).ready(function () {
     $('.commentArea > div:odd').addClass('bubbledRight');
     $('.commentArea > div:even').addClass('bubbledLeft');
 
-    //Modal dialog form validation
-    $("#frmPerson").validate({
-        rules: {
-            inpFirstName: {
-                required: true
-            }
-        },
-        messages: {
-            inpFirstName: {
-                required : "Required Field"
-            }
-        }
-    });
-
     //Right click menu.
     var $contextMenu = $("#contextMenu");
 
-    //Person Model
+    //Modal defaults
+    $("#frmError").hide();
+    $('#frmPerson').hide();
+
+    //Person Form form Validation
+    var $valPerson = $("#frmPerson").validate({
+        rules: {
+            inpFirstName: {
+                required: true
+            },
+            inpLastName: {
+                required: true
+            },
+            inpLegisProfile: {
+                url: true,
+                required: false
+            },
+            inpLegisProfile: {
+                url: true,
+                required: false
+            },
+            inpPhoto: {
+                url: true,
+                required: false
+            },
+            inpWikiProfile: {
+                url: true,
+                required: false
+            }
+        },
+        errorClass: 'has-error',
+        invalidHandler: formErrors,
+        errorPlacement: function () {
+            return false;
+        },
+        highlight: function (element, errorClass, validClass) {
+            $(element).parent().addClass(errorClass);
+        },
+        unhighlight: function (element, errorClass, validClass) {
+            $(element).parent().removeClass(errorClass);
+        }
+    });
+
+    //Generic function for handling all Modal errors.
+    function formErrors(event, validator) {
+        // 'this' refers to the form
+        var errors = validator.numberOfInvalids();
+        if (errors) {
+            var message = errors == 1
+        ? 'You missed 1 field. It has been highlighted'
+        : 'You missed ' + errors + ' fields. They have been highlighted';
+            $("#frmError").html(message);
+            $("#frmError").show();
+        } else {
+            $("#frmError").hide();
+        }
+    }
+
+    //KO Model - Person
     var viewPerson = function () {
 
         var self = this;
@@ -39,19 +84,21 @@ $(document).ready(function () {
         self.Photo = ko.observable();
         self.MaintainState = function (copy) {
 
+            var p = {
+                ID: 0,
+                FirstName: self.FirstName(),
+                LastName: self.LastName(),
+                Copy: copy,
+                LegisUrl: self.LegisProfile(),
+                PhotoUrl: self.Photo(),
+                WikiUrl: self.WikiProfile()
+            };
+
             $.ajax({
                 type: "POST",
                 cache: false,
-                url: "/api/Person",
-                data: {
-                    ID: "",
-                    FirstName: self.FirstName(),
-                    LastName: self.LastName(),
-                    Copy: copy,
-                    LegisUrl: self.LegisProfile(),
-                    PhotoUrl: self.Photo(),
-                    WikiUrl: self.WikiProfile()
-                },
+                url: "/API/Person",
+                data: p,
                 dataType: "json"
             })
             .done(function () {
@@ -69,11 +116,12 @@ $(document).ready(function () {
 
     }
 
-    //Knockout Page Model
+    //KO Model - Page
     var viewModel = function () {
 
-        //Properties
+        //ATP spending person.
         this.Person = new viewPerson();
+
         //pending
         this.NonGovOrg = ko.observable();
         this.CopyText = ko.observable();
@@ -121,10 +169,30 @@ $(document).ready(function () {
 
             //Hide subcontext menu.
             $contextMenu.css({ display: 'none' });
+
+            //Reset form
+            self.Person.FirstName('');
+            self.Person.LastName('');
+            self.Person.WikiProfile('');
+            self.Person.LegisProfile('');
+            self.Person.Photo('');
+
+            $('.form-group')
+                .children('div', '.has-error')
+                .removeClass('has-error');
+            $('#frmPerson').show();
+            $('#frmError').hide();
+
             //Show tab
             //$('#modCopyTabs a[href="#person"]').tab('show');
-            //Show modal
-            $('#modCopyTool').modal('show');
+
+            //Show modal, and focus.
+            $('#modCopyTool')
+                .on('shown.bs.modal',
+                    function (e) {
+                        $('#inpFirstName').focus();
+                    })
+                .modal('show');
 
         },
         this.selectNGO = function (data, event) {
@@ -158,18 +226,57 @@ $(document).ready(function () {
             $personForm.validate();
 
             //Enable Save
-            $btn.attr("disabled", "");
+            $btn.removeAttr("disabled");
 
             //jQuery Validate
-            if (!$personForm.valid()) {
-
+            if ($personForm.valid()) {
                 //Disable Save
                 $btn.attr("disabled", "disabled");
+                //Try to save.
                 this.Person.MaintainState(this.CopyText);
+                //Re-enable Save
                 $btn.removeAttr("disabled");
-
             }
         }
+
+        //Content Filter
+        this.swapPeople = function () {
+
+            var phrArr = null;
+            $.ajax({
+                type: "GET",
+                cache: false,
+                url: "/API/Phrase",
+                dataType: "json"
+            })
+            .done(function (data) {
+                console.log(data);
+                phrArr = data;
+
+                $("p").each(function () {
+                    $(this).html(function () {
+
+                        var content = $(this).html();
+                        for (var i in phrArr)
+                            content = content.replace(phrArr[i].Copy,
+                                        "<a href='#' data='{id: " + phrArr[i].$id + " }'>" + phrArr[i].Copy + "</a>");
+
+                        return content;
+
+                    });
+                });
+
+            }).fail(function () {
+                //alert("error");
+            }).always(function () {
+                //alert("complete");
+            });
+
+
+        }
+
+        this.swapPeople();
+
     };
 
     ko.applyBindings(new viewModel());

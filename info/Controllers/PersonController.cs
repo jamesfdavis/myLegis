@@ -70,15 +70,59 @@ namespace info.Controllers
             if (ModelState.IsValid)
             {
                 //Fetch the Copy FK (Phrase), add if necessary.
-                
-                //Create new Person Entity
-                
-                //db.People.AddObject(person);
-                db.SaveChanges();
 
-                HttpResponseMessage response = Request.CreateResponse(HttpStatusCode.Created, person);
-                response.Headers.Location = new Uri(Url.Link("DefaultApi", new { id = person.ID }));
-                return response;
+                //Check for the phrase selected.
+                Models.Phrase phrase = (from p in db.Phrases.Where(n => n.Copy == person.Copy)
+                                        select p).FirstOrDefault();
+
+                //Create phrase if not already available.
+                if (phrase == null)
+                {
+                    phrase = new Models.Phrase { Copy = person.Copy.Trim() };
+                    db.Phrases.AddObject(phrase);
+                    db.SaveChanges();
+                }
+
+                byte[] pho = null;
+                try
+                {
+                    WebClient wc = new WebClient();
+                    if (person.PhotoUrl.Length > 0)
+                        pho = wc.DownloadData(person.PhotoUrl);
+                }
+                catch (Exception)
+                {
+                    //Failed to download the photo!
+                }
+
+                Models.Person exists = (from p in db.People
+                                            .Where(n => n.FirstName == person.FirstName
+                                                     && n.LastName == person.LastName)
+                                        select p).FirstOrDefault();
+
+                if (exists == null)
+                {
+                    //Create new Person
+                    Models.Person someone = new Models.Person
+                    {
+                        Phrase = phrase,
+                        FirstName = person.FirstName,
+                        LastName = person.LastName,
+                        LegisProfile = person.LegisUrl,
+                        WikiProfile = person.WikiUrl,
+                        Photo = pho
+                    };
+                    //Save new object
+                    db.People.AddObject(someone);
+                    db.SaveChanges();
+                    person.ID = someone.ID;
+                    //Return
+                    return Request.CreateResponse(HttpStatusCode.Created, person);
+                }
+                else
+                {
+                    return Request.CreateResponse(HttpStatusCode.BadRequest);
+                }
             }
             else
             {

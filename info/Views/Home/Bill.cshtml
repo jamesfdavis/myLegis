@@ -41,21 +41,24 @@
                     <label for="inpFirstName" class="col-md-3 control-label">
                         First Name:</label>
                     <div class="col-md-9">
-                        <input id="inpFirstName" name="inpFirstName" type="text" data-bind="value : FirstName" class="form-control" />
+                        <input id="inpFirstName" name="inpFirstName" type="text" data-bind="value : FirstName"
+                            class="form-control" />
                     </div>
                 </div>
                 <div class="form-group">
                     <label for="inpLastName" class="col-md-3 control-label">
                         Last Name:</label>
                     <div class="col-md-9">
-                        <input id="inpLastName" name="inpLastName" type="text" data-bind="value : LastName" class="form-control" />
+                        <input id="inpLastName" name="inpLastName" type="text" data-bind="value : LastName"
+                            class="form-control" />
                     </div>
                 </div>
                 <div class="form-group">
                     <label for="inpLegisProfile" class="col-md-3 control-label">
                         Legislature URL:</label>
                     <div class="col-md-9">
-                        <input id="inpLegisProfile" name="inpLegisProfile" type="text" data-bind="value : LegisProfile" class="form-control" />
+                        <input id="inpLegisProfile" name="inpLegisProfile" type="text" data-bind="value : LegisProfile"
+                            class="form-control" />
                     </div>
                 </div>
                 <div class="form-group">
@@ -69,7 +72,8 @@
                     <label for="inpWikiProfile" class="col-md-3 control-label">
                         Wikipedia URL:</label>
                     <div class="col-md-6">
-                        <input id="inpWikiProfile" name="inpWikiProfile" type="text" data-bind="value : WikiProfile" class="form-control" />
+                        <input id="inpWikiProfile" name="inpWikiProfile" type="text" data-bind="value : WikiProfile"
+                            class="form-control" />
                     </div>
                     <div class="col-md-3">
                         <button type="button" class="btn btn-info">
@@ -81,10 +85,12 @@
                     Newsletter stuff: (<a href="https://developer.constantcontact.com/libraries/libraries.html">Constant
                         Contact)</a>, (<a href="https://github.com/constantcontact/.net-sdk">GitHub</a>)
                 </p>
-                <p data-bind="text : FirstName()">Some Text</p>
+                <p></p>
                 </form>
             </div>
             <div class="modal-footer">
+                <div class="alert alert-danger" id="frmError">
+                </div>
                 <button type="button" class="btn btn-default" data-dismiss="modal">
                     Close</button>
                 <button type="button" class="btn btn-primary" data-bind="click : saveModal">
@@ -102,11 +108,13 @@
     <div id="contextMenu" class="dropdown clearfix">
         <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu" style="display: block;
             position: static; margin-bottom: 5px;">
-@*            <li><a tabindex="-1" href="#" data-bind="click : selectCopy">Copy and Find</a></li>
-*@            <li><a tabindex="-1" href="#" data-bind="click : selectPerson">Copy to Person</a></li>
-@*            <li><a tabindex="-1" href="#" data-bind="click : selectNGO">Copy to NGO</a></li>
+            @*            <li><a tabindex="-1" href="#" data-bind="click : selectCopy">Copy and Find</a></li>
+*@
+            <li><a tabindex="-1" href="#" data-bind="click : selectPerson">Copy to Person</a></li>
+            @*            <li><a tabindex="-1" href="#" data-bind="click : selectNGO">Copy to NGO</a></li>
             <li><a tabindex="-1" href="#" data-bind="click : selectNewsletter">Copy to Newsletter</a></li>
-*@            <li class="divider"></li>
+*@
+            <li class="divider"></li>
             <li><a tabindex="-1" href="#">Separated link</a></li>
         </ul>
     </div>
@@ -274,18 +282,15 @@
     <!-- footer -->
     <div class="footer">
         @Html.Partial("_footer")
-        <a href="#" id="myText">Selected Text</a>
     </div>
     <!-- ./footer -->
 </div>
 <!-- /container -->
 @section scripts {
     @Scripts.Render("~/bundles/bill")
-
-@*    <script type="text/javascript">
-        $(document).ready(function () {
-            //$('#modCopyTool').modal();
-        });
+    @*    <script type="text/javascript">
+              $(document).ready(function () {
+                  //$('#modCopyTool').modal();
+              });
     </script>*@
-
 }

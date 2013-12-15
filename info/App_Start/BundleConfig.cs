@@ -9,29 +9,32 @@ namespace info
         public static void RegisterBundles(BundleCollection bundles)
         {
 
+            //Core frameworks
             bundles.Add(new ScriptBundle("~/bundles/frameworks").Include(
                                     "~/Scripts/jquery-{version}.js",
                                     "~/Scripts/jquery.validate.js",
                                     "~/Scripts/jquery-metadata.js",
                                     "~/Scripts/knockout-{version}.js",
+                                    "~/Scripts/knockout.mapping{version}.js",
                                     "~/Scripts/bootstrap.js"));
 
             //Home/Bill - Knockout
             bundles.Add(new ScriptBundle("~/bundles/bill").Include(
-                        "~/Scripts/home.bill.js"));
+                                    "~/Scripts/regex.js",
+                                    "~/Scripts/home.bill.js"));
 
             // Use the development version of Modernizr to develop with and learn from. Then, when you're
             // ready for production, use the build tool at http://modernizr.com to pick only the tests you need.
             bundles.Add(new ScriptBundle("~/bundles/modernizr").Include(
-                        "~/Scripts/modernizr-*"));
+                                     "~/Scripts/modernizr-*"));
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
-                "~/Content/bootstrap.css",
-                "~/Content/bootstrap-theme.css",
-                "~/Content/site.css"));
+                                     "~/Content/bootstrap.css",
+                                     "~/Content/bootstrap-theme.css",
+                                     "~/Content/site.css"));
 
             bundles.Add(new StyleBundle("~/Content/narrowjumbo").Include(
-           "~/Content/jumbotron-narrow.css"));
+                                     "~/Content/jumbotron-narrow.css"));
 
             //bundles.Add(new StyleBundle("~/Content/themes/base/css").Include(
             //            "~/Content/themes/base/jquery.ui.core.css",
@@ -46,6 +49,7 @@ namespace info
             //            "~/Content/themes/base/jquery.ui.datepicker.css",
             //            "~/Content/themes/base/jquery.ui.progressbar.css",
             //            "~/Content/themes/base/jquery.ui.theme.css"));
+
         }
     }
 }
