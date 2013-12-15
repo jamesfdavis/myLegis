@@ -22,79 +22,105 @@
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
                     &times;</button>
                 <h4 class="modal-title" id="modCopyToolLabel">
-                    Selected Copy Tool</h4>
+                    Document Phrase</h4>
             </div>
             <div class="modal-body">
-                <form class="form-horizontal" id="frmPerson" role="form" data-bind="with: Person">
-                <!-- Copy text -->
-                <div class="form-group">
-                    <label for="personText" class="col-md-3 control-label">
-                        Selected</label>
-                    <div class="col-md-9">
-                        <input type="text" id="personText" class="form-control" data-bind="value : $root.CopyText"
-                            disabled />
+                <!-- Nav tabs -->
+                <ul class="nav nav-tabs" id="modCopyTabs">
+                    <li><a href="#tabCopyHome" data-toggle="tab">Home</a></li>
+                    <li><a href="#tabPerson" data-toggle="tab">Person</a></li>
+                    <li><a href="#tabNGO" data-toggle="tab">Non-Government Agency</a></li>
+                    <li><a href="#tabNewsletter" data-toggle="tab">Constant Contact</a></li>
+                </ul>
+                <!-- Tab panes -->
+                <div class="tab-content" style="margin-top: 15px;">
+                    <div class="tab-pane in active" id="tabCopyHome">
+                        <div class="form-group">
+                            <label for="personText" class="col-md-3 control-label">
+                                Selected</label>
+                            <div class="col-md-9">
+                                <span>HIGGINS</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-pane" id="tabPerson">
+                        <form class="form-horizontal" id="frmPerson" role="form" data-bind="with: Person">
+                        <!-- Copy text -->
+                        <div class="form-group">
+                            <label for="personText" class="col-md-3 control-label">
+                                Selected</label>
+                            <div class="col-md-9">
+                                <input type="text" id="personText" class="form-control" data-bind="value : $root.CopyText"
+                                    disabled />
+                            </div>
+                        </div>
+                        <!-- Person Form -->
+                        <div class="form-group">
+                            <label for="inpFirstName" class="col-md-3 control-label">
+                                First Name:</label>
+                            <div class="col-md-9">
+                                <input id="inpFirstName" name="inpFirstName" type="text" data-bind="value : FirstName"
+                                    class="form-control" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="inpLastName" class="col-md-3 control-label">
+                                Last Name:</label>
+                            <div class="col-md-9">
+                                <input id="inpLastName" name="inpLastName" type="text" data-bind="value : LastName"
+                                    class="form-control" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="inpLegisProfile" class="col-md-3 control-label">
+                                Legislature URL:</label>
+                            <div class="col-md-9">
+                                <input id="inpLegisProfile" name="inpLegisProfile" type="text" data-bind="value : LegisProfile"
+                                    class="form-control" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="inpPhoto" class="col-md-3 control-label">
+                                Photo URL:</label>
+                            <div class="col-md-9">
+                                <input id="inpPhoto" name="inpPhoto" type="text" data-bind="value : Photo" class="form-control" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="inpWikiProfile" class="col-md-3 control-label">
+                                Wikipedia URL:</label>
+                            <div class="col-md-6">
+                                <input id="inpWikiProfile" name="inpWikiProfile" type="text" data-bind="value : WikiProfile"
+                                    class="form-control" />
+                            </div>
+                            <div class="col-md-3">
+                                <button type="button" class="btn btn-info">
+                                    Wikipedia</button>
+                            </div>
+                        </div>
+                        </form>
+                        <div class="col-md-6  col-md-offset-3">
+                            <button type="button" class="btn btn-primary" data-bind="click : $root.savePerson">
+                                Save Person</button>
+                        </div>
+                    </div>
+                    <div class="tab-pane" id="tabNGO">
+                        NGO
+                    </div>
+                    <div class="tab-pane" id="tabNewsletter">
+                        Newsletter
+                        <p>
+                            Newsletter stuff: (<a href="https://developer.constantcontact.com/libraries/libraries.html">Constant
+                                Contact)</a>, (<a href="https://github.com/constantcontact/.net-sdk">GitHub</a>)
+                        </p>
                     </div>
                 </div>
-                <h4 style="padding-left: 20px; margin-bottom: 15px;">
-                    Person Form</h4>
-                <div class="form-group">
-                    <label for="inpFirstName" class="col-md-3 control-label">
-                        First Name:</label>
-                    <div class="col-md-9">
-                        <input id="inpFirstName" name="inpFirstName" type="text" data-bind="value : FirstName"
-                            class="form-control" />
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label for="inpLastName" class="col-md-3 control-label">
-                        Last Name:</label>
-                    <div class="col-md-9">
-                        <input id="inpLastName" name="inpLastName" type="text" data-bind="value : LastName"
-                            class="form-control" />
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label for="inpLegisProfile" class="col-md-3 control-label">
-                        Legislature URL:</label>
-                    <div class="col-md-9">
-                        <input id="inpLegisProfile" name="inpLegisProfile" type="text" data-bind="value : LegisProfile"
-                            class="form-control" />
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label for="inpPhoto" class="col-md-3 control-label">
-                        Photo URL:</label>
-                    <div class="col-md-9">
-                        <input id="inpPhoto" name="inpPhoto" type="text" data-bind="value : Photo" class="form-control" />
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label for="inpWikiProfile" class="col-md-3 control-label">
-                        Wikipedia URL:</label>
-                    <div class="col-md-6">
-                        <input id="inpWikiProfile" name="inpWikiProfile" type="text" data-bind="value : WikiProfile"
-                            class="form-control" />
-                    </div>
-                    <div class="col-md-3">
-                        <button type="button" class="btn btn-info">
-                            Wikipedia</button>
-                    </div>
-                </div>
-                <!-- Person Form -->
-                <p style="display: none;">
-                    Newsletter stuff: (<a href="https://developer.constantcontact.com/libraries/libraries.html">Constant
-                        Contact)</a>, (<a href="https://github.com/constantcontact/.net-sdk">GitHub</a>)
-                </p>
-                <p></p>
-                </form>
             </div>
             <div class="modal-footer">
                 <div class="alert alert-danger" id="frmError">
                 </div>
                 <button type="button" class="btn btn-default" data-dismiss="modal">
                     Close</button>
-                <button type="button" class="btn btn-primary" data-bind="click : saveModal">
-                    Save changes</button>
             </div>
         </div>
         <!-- /.modal-content -->
@@ -102,20 +128,38 @@
     <!-- /.modal-dialog -->
 </div>
 <!-- /.modal -->
+<div class="modal fade" id="modPhraseProfile" tabindex="-1" role="dialog" aria-labelledby="modPhraseProfileLabel"
+    aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                    &times;</button>
+                <h4 class="modal-title" id="modPhraseProfileLabel">
+                    Phrase Profile</h4>
+            </div>
+            <div class="modal-body">
+                <h4 style="padding-left: 20px; margin-bottom: 15px;">
+                    Person</h4>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">
+                    Close</button>
+            </div>
+        </div>
+    </div>
+</div>
 <!-- container -->
 <div class="container">
     <!-- context menu -->
     <div id="contextMenu" class="dropdown clearfix">
         <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu" style="display: block;
             position: static; margin-bottom: 5px;">
-            @*            <li><a tabindex="-1" href="#" data-bind="click : selectCopy">Copy and Find</a></li>
-*@
-            <li><a tabindex="-1" href="#" data-bind="click : selectPerson">Copy to Person</a></li>
-            @*            <li><a tabindex="-1" href="#" data-bind="click : selectNGO">Copy to NGO</a></li>
-            <li><a tabindex="-1" href="#" data-bind="click : selectNewsletter">Copy to Newsletter</a></li>
-*@
+            <li><a tabindex="-1" href="#" data-bind="click : selectSearch">Copy and Search</a></li>
             <li class="divider"></li>
-            <li><a tabindex="-1" href="#">Separated link</a></li>
+            <li><a tabindex="-1" href="#" data-bind="click : selectPerson">Copy to Person</a></li>
+            <li><a tabindex="-1" href="#" data-bind="click : selectNGO">Copy to NGO</a></li>
+            <li><a tabindex="-1" href="#" data-bind="click : selectNewsletter">Copy to Newsletter</a></li>
         </ul>
     </div>
     <!-- /.context -->

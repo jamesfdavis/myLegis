@@ -115,6 +115,7 @@ namespace info.Controllers
                     //Save new object
                     db.People.AddObject(someone);
                     db.SaveChanges();
+                    //New PrimaryKey
                     person.ID = someone.ID;
                     //Return
                     return Request.CreateResponse(HttpStatusCode.Created, person);

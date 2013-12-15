@@ -11,12 +11,27 @@ $(document).ready(function () {
     $('.commentArea > div:odd').addClass('bubbledRight');
     $('.commentArea > div:even').addClass('bubbledLeft');
 
+    //Setup MetaData defaults.
+    $.metadata.setType("attr", "data");
+
     //Right click menu.
     var $contextMenu = $("#contextMenu");
 
     //Modal defaults
     $("#frmError").hide();
-    $('#frmPerson').hide();
+    //Reset forms.
+    $('#modCopyTabs a').click(function (e) {
+        e.preventDefault();
+
+        //Reset error message.
+        $("#frmError").hide();
+        //Reset control validation.
+        $('.form-group')
+                .children('div', '.has-error')
+                .removeClass('has-error');
+        $('#frmError').hide();
+
+    })
 
     //Person Form form Validation
     var $valPerson = $("#frmPerson").validate({
@@ -72,11 +87,23 @@ $(document).ready(function () {
         }
     }
 
+    function serverErrors(data) {
+        if (errors) {
+            var message = errors == 1
+        ? 'You missed 1 field. It has been highlighted'
+        : 'You missed ' + errors + ' fields. They have been highlighted';
+            $("#frmError").html(message);
+            $("#frmError").show();
+        } else {
+            $("#frmError").hide();
+        }
+    }
+
     //KO Model - Person
     var viewPerson = function () {
 
         var self = this;
-        self.ID = ko.observable(null);
+        self.ID = ko.observable(0);
         self.FirstName = ko.observable();
         self.LastName = ko.observable();
         self.LegisProfile = ko.observable();
@@ -84,49 +111,49 @@ $(document).ready(function () {
         self.Photo = ko.observable();
         self.MaintainState = function (copy) {
 
-            var p = {
-                ID: 0,
-                FirstName: self.FirstName(),
-                LastName: self.LastName(),
-                Copy: copy,
-                LegisUrl: self.LegisProfile(),
-                PhotoUrl: self.Photo(),
-                WikiUrl: self.WikiProfile()
-            };
-
-            $.ajax({
-                type: "POST",
-                cache: false,
-                url: "/API/Person",
-                data: p,
-                dataType: "json"
-            })
-            .done(function () {
-                //alert("success");
-            }).fail(function () {
-                //alert("error");
-            }).always(function () {
-                //alert("complete");
-            });
-
-            //Save back to the server.
-            console.warn('TODO Save');
-
+            if (self.ID() == 0) {
+                //Try to create the Person
+                $.ajax({
+                    type: "POST",
+                    cache: false,
+                    data: {
+                        ID: self.ID(),
+                        FirstName: self.FirstName(),
+                        LastName: self.LastName(),
+                        Copy: copy,
+                        LegisUrl: self.LegisProfile(),
+                        PhotoUrl: self.Photo(),
+                        WikiUrl: self.WikiProfile()
+                    },
+                    url: "/API/Person",
+                    dataType: "json"
+                })
+                .done(function (data) {
+                    //Set the Person ID
+                    self.ID(data.ID);
+                }).fail(function () {
+                    //alert("error");
+                }).always(function () {
+                    //alert("complete");
+                });
+            } else {
+                //Try to update the Person.
+                console.warn('TODO - Update Person');
+            }
         }
-
     }
 
     //KO Model - Page
     var viewModel = function () {
 
-        //ATP spending person.
+        //Homeosapien.
         this.Person = new viewPerson();
 
-        //pending
+        //pending development
         this.NonGovOrg = ko.observable();
         this.CopyText = ko.observable();
 
-        //Methods
+        //Basic Methods
         this.rightClick = function (data, event) {
 
             var self = this;
@@ -137,7 +164,7 @@ $(document).ready(function () {
                 self.CopyText(document.selection.createRange().text);
             }
 
-            console.info('Right-click Copy:(' + this.CopyText() + ')');
+            console.info('Right-click Copy: (' + this.CopyText() + ')');
 
             //Check for text selection
             if (self.CopyText().length != 0) {
@@ -153,13 +180,14 @@ $(document).ready(function () {
                 $contextMenu.css({ display: 'none' });
             }
         },
-        this.selectCopy = function (data, event) {
+        this.selectSearch = function (data, event) {
             var self = this;
 
             //Hide subcontext menu.
             $contextMenu.css({ display: 'none' });
             //Show tab
-            $('#modCopyTabs a[href="#home"]').tab('show');
+            $('#modCopyTabs a[href="#tabCopyHome"]').tab('show');
+
             //Show modal
             $('#modCopyTool').modal('show');
 
@@ -170,21 +198,20 @@ $(document).ready(function () {
             //Hide subcontext menu.
             $contextMenu.css({ display: 'none' });
 
-            //Reset form
+            //Reset Person data
             self.Person.FirstName('');
             self.Person.LastName('');
             self.Person.WikiProfile('');
             self.Person.LegisProfile('');
             self.Person.Photo('');
-
+            //Reset control validation.
             $('.form-group')
                 .children('div', '.has-error')
                 .removeClass('has-error');
-            $('#frmPerson').show();
             $('#frmError').hide();
 
             //Show tab
-            //$('#modCopyTabs a[href="#person"]').tab('show');
+            $('#modCopyTabs a[href="#tabPerson"]').tab('show');
 
             //Show modal, and focus.
             $('#modCopyTool')
@@ -201,7 +228,7 @@ $(document).ready(function () {
             //Hide subcontext menu.
             $contextMenu.css({ display: 'none' });
             //Show tab
-            //$('#modCopyTabs a[href="#nongovorg"]').tab('show');
+            $('#modCopyTabs a[href="#tabNGO"]').tab('show');
             //Show modal
             $('#modCopyTool').modal('show');
 
@@ -212,12 +239,12 @@ $(document).ready(function () {
             //Hide subcontext menu.
             $contextMenu.css({ display: 'none' });
             //Show tab
-            //$('#modCopyTabs a[href="#newsletter"]').tab('show');
+            $('#modCopyTabs a[href="#tabNewsletter"]').tab('show');
             //Show modal
             $('#modCopyTool').modal('show');
 
         },
-        this.saveModal = function (data, event) {
+        this.savePerson = function (data, event) {
 
             var self = this;
             var $btn = $(event.target);
@@ -233,16 +260,17 @@ $(document).ready(function () {
                 //Disable Save
                 $btn.attr("disabled", "disabled");
                 //Try to save.
-                this.Person.MaintainState(this.CopyText);
+                self.Person.MaintainState(this.CopyText);
                 //Re-enable Save
                 $btn.removeAttr("disabled");
             }
         }
 
-        //Content Filter
+        //Filter Methods
         this.swapPeople = function () {
 
-            var phrArr = null;
+            var self = this;
+
             $.ajax({
                 type: "GET",
                 cache: false,
@@ -250,21 +278,29 @@ $(document).ready(function () {
                 dataType: "json"
             })
             .done(function (data) {
-                console.log(data);
-                phrArr = data;
-
                 $("p").each(function () {
                     $(this).html(function () {
-
+                        //Replace the keywords with links.
                         var content = $(this).html();
-                        for (var i in phrArr)
-                            content = content.replace(phrArr[i].Copy,
-                                        "<a href='#' data='{id: " + phrArr[i].$id + " }'>" + phrArr[i].Copy + "</a>");
+                        for (var i in data)
+                            content = content.replace(data[i].Copy,
+                                        "<a class='phrase' href='#' data='{id: " + data[i].$id + " }'>" + data[i].Copy + "</a>");
 
                         return content;
 
                     });
                 });
+
+                //Click event for Phrase links.
+                $('a.phrase').on('click', function (event) {
+                    event.preventDefault();
+
+                    var $data = $(this).metadata();
+                    //Fire up modal window.
+                    self.loadPhrase($data.id);
+
+                });
+
 
             }).fail(function () {
                 //alert("error");
@@ -272,6 +308,17 @@ $(document).ready(function () {
                 //alert("complete");
             });
 
+
+        },
+
+        //Load Phrase Modal window.
+        this.loadPhrase = function (id) {
+
+            //Show Modal window
+
+            //Get the dataset from the server
+
+            //Map KO Model to Appropriate View (Person, NGO)
 
         }
 

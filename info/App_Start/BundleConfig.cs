@@ -13,7 +13,7 @@ namespace info
             bundles.Add(new ScriptBundle("~/bundles/frameworks").Include(
                                     "~/Scripts/jquery-{version}.js",
                                     "~/Scripts/jquery.validate.js",
-                                    "~/Scripts/jquery-metadata.js",
+                                    "~/Scripts/jquery.metadata.js",
                                     "~/Scripts/knockout-{version}.js",
                                     "~/Scripts/knockout.mapping{version}.js",
                                     "~/Scripts/bootstrap.js"));
