@@ -41,8 +41,12 @@ namespace info.Controllers
         [HttpPut]
         public HttpResponseMessage PutPerson(int id, Person person)
         {
+
             if (ModelState.IsValid && id == person.ID)
             {
+
+                
+
                 //db.People.Attach(person);
                 db.ObjectStateManager.ChangeObjectState(person, EntityState.Modified);
 

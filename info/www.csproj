@@ -162,6 +162,7 @@
     <Content Include="Content\fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Content\img\speech_bubble_left.png" />
     <Content Include="Content\img\speech_bubble_right.png" />
+    <Content Include="Content\jquery.dynatable.css" />
     <Content Include="Content\jumbotron-narrow.css" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
@@ -173,6 +174,7 @@
     <Content Include="Scripts\jquery-1.9.1.min.js" />
     <Content Include="Scripts\jquery-ui-1.8.20.js" />
     <Content Include="Scripts\jquery-ui-1.8.20.min.js" />
+    <Content Include="Scripts\jquery.dynatable.js" />
     <Content Include="Scripts\jquery.metadata.js" />
     <Content Include="Scripts\jquery.unobtrusive-ajax.js" />
     <Content Include="Scripts\jquery.unobtrusive-ajax.min.js" />

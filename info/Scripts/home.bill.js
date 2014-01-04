@@ -88,22 +88,30 @@ $(document).ready(function () {
         }
     }
 
+    //Generic function for handling all Modal errors.
+    function serverErrors(data) {
+        var message = 'Error on server-side!';
+        $("#frmError").html(message + ' (' + data.statusText + ' - code: ' + data.status + ')');
+        $("#frmError").show();
+    }
+
     //KO Model - Person
     var viewPerson = function () {
 
         var self = this;
+        //Basic Properties
         self.ID = ko.observable(0);
         self.Copy = ko.observable('');
-        self.FirstName = ko.observable();
-        self.LastName = ko.observable();
-        self.LegisProfile = ko.observable();
-        self.WikiProfile = ko.observable();
-        self.Photo = ko.observable();
+        self.Search = ko.observable('');
+        self.Leg_Id = ko.observable();
+        self.FullName = ko.observable();
+
+        //Save Data
         self.MaintainState = function (data, event) {
 
             //Grab Selected Copy
             self.Copy($('#personText').val());
-            
+
             var $btn = $(event.target);
 
             var $personForm = $("#frmPerson");
@@ -125,35 +133,37 @@ $(document).ready(function () {
         }
         self.Save = function () {
 
-            if (self.ID() == 0) {
-                //Try to create the Person
-                $.ajax({
-                    type: "POST",
-                    cache: false,
-                    data: {
-                        ID: self.ID(),
-                        FirstName: self.FirstName(),
-                        LastName: self.LastName(),
-                        Copy: self.Copy(),
-                        LegisUrl: self.LegisProfile(),
-                        PhotoUrl: self.Photo(),
-                        WikiUrl: self.WikiProfile()
-                    },
-                    url: "/API/Person",
-                    dataType: "json"
-                })
-                .done(function (data) {
-                    //Set the Person ID
-                    self.ID(data.ID);
-                }).fail(function () {
-                    //alert("error");
-                }).always(function () {
-                    //alert("complete");
-                });
-            } else {
-                //Try to update the Person.
-                console.warn('TODO - Update Person');
-            }
+            //Try to create the Person
+            $.ajax({
+                type: "POST",
+                cache: false,
+                data: {
+                    ID: self.ID(),
+                    FirstName: self.FirstName(),
+                    LastName: self.LastName(),
+                    Copy: self.Copy(),
+                    LegisUrl: self.LegisProfile(),
+                    PhotoUrl: self.Photo(),
+                    WikiUrl: self.WikiProfile()
+                },
+                url: "/API/Person",
+                dataType: "json"
+            })
+            .done(function (data) {
+                //Set the Person ID
+                self.ID(data.ID);
+                //Show modal
+                $('#modCopyTool').modal('hide');
+
+                //TODO - Show person profile dialog.
+
+            }).fail(function (data, status) {
+                serverErrors(data);
+                //alert("error");
+            }).always(function () {
+                //alert("complete");
+            });
+
         }
     }
 
@@ -164,8 +174,8 @@ $(document).ready(function () {
         this.Person = new viewPerson();
 
         //pending development
-        this.NonGovOrg = ko.observable();
-        this.CopyText = ko.observable();
+        this.NonGovOrg = ko.observable(),
+        this.CopyText = ko.observable(),
 
         //Basic Methods
         this.rightClick = function (data, event) {
@@ -194,14 +204,6 @@ $(document).ready(function () {
                 $contextMenu.css({ display: 'none' });
             }
         },
-        this.selectSearch = function (data, event) {
-            //Hide subcontext menu.
-            $contextMenu.css({ display: 'none' });
-            //Show tab
-            $('#modCopyTabs a[href="#tabCopyHome"]').tab('show');
-            //Show modal
-            $('#modCopyTool').modal('show');
-        },
         this.selectPerson = function (data, event) {
             var self = this;
 
@@ -209,11 +211,96 @@ $(document).ready(function () {
             $contextMenu.css({ display: 'none' });
 
             //Reset Person data
-            self.Person.FirstName('');
-            self.Person.LastName('');
-            self.Person.WikiProfile('');
-            self.Person.LegisProfile('');
-            self.Person.Photo('');
+            self.Person.FullName('');
+            self.Person.Search('');
+            self.Person.Leg_Id('');
+
+            var url = 'http://openstates.org/api/v1//legislators/?state=ak&active=true&last_name=Wilson&apikey=0b6a5cec96214c22b41cd8c4ba605d85';
+
+            $.get(url, null,
+            function (data) {
+                console.log(data);
+
+                // Function that renders the list items from our records
+                function ulWriter(rowIndex, record, columns, cellWriter) {
+                    //                    var cssClass = "span4", li;
+                    //                    if (rowIndex % 3 === 0) { cssClass += ' first'; }
+                    //                    li = '<li class="' + cssClass + '"><div class="thumbnail"><div class="thumbnail-image">' + record.thumbnail + '</div><div class="caption">' + record.caption + '</div></div></li>';
+                    //                    return li;
+
+                    var legis = '';
+
+                    legis += '<div class="col-md-4">';
+                    legis += '    <div>';
+                    legis += '        <div>';
+                    legis += '            <img src="' + record.photo_url + '" alt="Legislator"  class="img-thumbnail" />';
+                    legis += '        </div>';
+                    legis += '    </div>';
+                    legis += '</div>';
+                    legis += '<div class="col-md-8">';
+                    legis += '    <div class="caption">';
+                    legis += '        <h3 style="margin-top : 3px;">';
+                    legis += '            ' + record.full_name + '</h3>';
+                    legis += '        <p>';
+                    legis += '            Party: ' + record.party + '</p>';
+                    legis += '        <p>';
+                    legis += '            District: ' + record.district + '</p>';
+                    legis += '        <p>';
+                    legis += '            Level: ' + record.level + '</p>';
+                    legis += '        <p>';
+                    legis += '            <a href="' + record.url + '" target="_blank" class="btn btn-default">';
+                    legis += '                Public Profile</a>';
+                    legis += '        </p>';
+                    legis += '    </div>';
+                    legis += '</div>';
+
+                    return legis;
+
+                }
+
+                // Function that creates our records from the DOM when the page is loaded
+                function ulReader(index, li, record) {
+                    var $li = $(li),
+      $caption = $li.find('.caption');
+                    record.thumbnail = $li.find('.thumbnail-image').html();
+                    record.caption = $caption.html();
+                    record.label = $caption.find('h3').text();
+                    record.description = $caption.find('p').text();
+                    record.color = $li.data('color');
+                }
+
+                $('#my-legislator-results').dynatable({
+                    dataset: {
+                        records: data,
+                        perPageDefault: 1,
+                        page: 0
+                    },
+                    table: {
+                        bodyRowSelector: 'div'
+                    },
+                    features: {
+                        search: false,
+                        perPageSelect: false,
+                        recordCount: false
+                    },
+                    writers: {
+                        _rowWriter: ulWriter
+                    },
+                    readers: {
+                        _rowReader: ulReader
+                    }
+                });
+
+            }, 'jsonp');
+
+            //    var $records = $('#json-records'),
+            //    myRecords = JSON.parse($records.text());
+
+            //            $('#my-final-table').dynatable({
+            //                dataset: {
+            //                    records: myRecords
+            //                }
+            //            });
 
             //Selected Copy value to all the sub-objects!
             //self.Person.Copy(self.CopyText());
@@ -231,7 +318,7 @@ $(document).ready(function () {
             $('#modCopyTool')
                 .on('shown.bs.modal',
                     function (e) {
-                        $('#inpFirstName').focus();
+                        $('#inpSearch').focus();
                     })
                 .modal('show');
 
@@ -259,8 +346,8 @@ $(document).ready(function () {
 
         },
 
-        //Filter Methods
-        this.swapPeople = function () {
+        //Phrase Methods
+        this.anchorPhrases = function () {
 
             var self = this;
 
@@ -275,25 +362,18 @@ $(document).ready(function () {
                     $(this).html(function () {
                         //Replace the keywords with links.
                         var content = $(this).html();
+                        console.log(data);
                         for (var i in data)
                             content = content.replace(data[i].Copy,
-                                        "<a class='phrase' href='#' data='{id: " + data[i].$id + " }'>" + data[i].Copy + "</a>");
+                                        "<a class='phrase' href='#' data='{id: " + data[i].ID + " }'>" + data[i].Copy + "</a>");
 
                         return content;
 
                     });
                 });
 
-                //Click event for Phrase links.
-                $('a.phrase').on('click', function (event) {
-                    event.preventDefault();
-
-                    var $data = $(this).metadata();
-                    //Fire up modal window.
-                    self.loadPhrase($data.id);
-
-                });
-
+                //Wire up new Anchor tags
+                self.anchorClick();
 
             }).fail(function () {
                 //alert("error");
@@ -301,13 +381,43 @@ $(document).ready(function () {
                 //alert("complete");
             });
 
+        },
+        this.anchorClick = function () {
+
+            var self = this;
+            //Click event for Phrase links.
+            $('a.phrase').on('click', function (event) {
+                event.preventDefault();
+
+                var $data = $(this).metadata();
+                //Fire up modal window.
+                self.loadPhrase($data.id);
+
+            });
 
         },
 
         //Load Phrase Modal window.
         this.loadPhrase = function (id) {
 
+            console.log('Loading phrase id: ' + id);
+
+            $.ajax({
+                type: "GET",
+                cache: false,
+                url: "/API/Phrase/" + id,
+                dataType: "json"
+            }).done(function (data) {
+                //alert(data);
+                console.log(data);
+
+            }).fail(function () {
+                //alert("error");
+            }).always(function () {
+                //alert("complete");
+            });
             //Show Modal window
+
 
             //Get the dataset from the server
 
@@ -315,7 +425,7 @@ $(document).ready(function () {
 
         }
 
-        this.swapPeople();
+        this.anchorPhrases();
 
     };
 

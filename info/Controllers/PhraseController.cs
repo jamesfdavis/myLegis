@@ -22,6 +22,21 @@ namespace info.Controllers
             return db.Phrases.AsEnumerable();
         }
 
+        // GET api/Phrase/5
+        [HttpGet]
+        public Phrase GetPhrase(int id)
+        {
+
+            Phrase phrase = db.Phrases.Single(p => p.ID == id);
+
+            if (phrase == null)
+            {
+                throw new HttpResponseException(Request.CreateResponse(HttpStatusCode.NotFound));
+            }
+
+            return phrase;
+        }
+
         protected override void Dispose(bool disposing)
         {
             db.Dispose();

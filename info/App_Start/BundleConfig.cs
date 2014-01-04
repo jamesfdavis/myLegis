@@ -21,6 +21,7 @@ namespace info
             //Home/Bill - Knockout
             bundles.Add(new ScriptBundle("~/bundles/bill").Include(
                                     "~/Scripts/regex.js",
+                                    "~/Scripts/jquery.dynatable.js",
                                     "~/Scripts/home.bill.js"));
 
             // Use the development version of Modernizr to develop with and learn from. Then, when you're
@@ -31,6 +32,7 @@ namespace info
             bundles.Add(new StyleBundle("~/Content/css").Include(
                                      "~/Content/bootstrap.css",
                                      "~/Content/bootstrap-theme.css",
+                                     "~/Content/jquery.dynatable.css",
                                      "~/Content/site.css"));
 
             bundles.Add(new StyleBundle("~/Content/narrowjumbo").Include(
