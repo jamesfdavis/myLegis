@@ -401,8 +401,6 @@ namespace myLegis.Spider
 
                 this.Journals.Add(jrn);
 
-                String stop = @"spam";
-
                 // String minutes = (from t in t
             }
 

@@ -1,0 +1,71 @@
+﻿@{
+    ViewBag.Title = "LogOn";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section css {
+    @Styles.Render("~/Content/narrowjumbo")
+}
+<link rel="stylesheet" type="text/css" media="screen" href="../../Content/openid.css" />
+<div class="container">
+    <!-- Static navbar -->
+    <div class="navbar navbar-default" role="navigation">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="sr-only">Toggle navigation</span> <span class="icon-bar"></span><span
+                    class="icon-bar"></span><span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#">myLegis</a>
+        </div>
+        <div class="navbar-collapse collapse">
+            <ul class="nav navbar-nav">
+                <li><a href="@Url.Action("Index")">Home</a></li>
+                <li><a href="@Url.Action("Senate")">Senate Legislation</a></li>
+                <li><a href="@Url.Action("House")">House Legislation</a></li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <li><a href="@Url.Action("Logon", new { Controller = "Account" })">myAccount</a></li>
+            </ul>
+        </div>
+        <!--/.nav-collapse -->
+    </div>
+    <ol class="breadcrumb">
+        <li><a href="@Url.Action("Index", new { Controller = "Home" })">Home</a> </li>
+        <li class="active">OpenID Logon</li>
+    </ol>
+    <div class="row marketing">
+        <div class="col-lg-6">
+            <form class="openid" method="post" action="/Account/LogOn">
+            <div>
+                <ul class="providers">
+                    <li class="direct" title="Google">
+                        <img src="../../Content/img/googleB.png" alt="icon" />
+                        <span style="display: none;">https://www.google.com/accounts/o8/id</span></li>
+                    <li class="direct" title="Yahoo">
+                        <img src="../../Content/img/yahooB.png" alt="icon" />
+                        <span style="display: none;">http://yahoo.com/</span></li>
+                </ul>
+            </div>
+            <input type="hidden" name="openid_username" />
+            <input type="hidden" name="openid_identifier" />
+            </form>
+        </div>
+        <div class="col-lg-6">
+            <h4>
+                OpenID</h4>
+            <p>
+                Login with an OpenID account to personalize your myLegis experience.</p>
+        </div>
+    </div>
+    <div class="footer">
+        @Html.Partial("_footer")
+    </div>
+</div>
+<!-- /container -->
+@section scripts {
+    <script src="../../Scripts/jquery.openid.js" type="text/javascript"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $(function () { $("form.openid").openid(); });
+        });
+    </script>
+}

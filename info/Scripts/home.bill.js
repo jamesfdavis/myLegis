@@ -170,6 +170,9 @@ $(document).ready(function () {
     //KO Model - Page
     var viewModel = function () {
 
+        //OpenStates.org Key
+        var OSKey = '0b6a5cec96214c22b41cd8c4ba605d85';
+
         //Homeosapien.
         this.Person = new viewPerson();
 
@@ -215,83 +218,7 @@ $(document).ready(function () {
             self.Person.Search('');
             self.Person.Leg_Id('');
 
-            var url = 'http://openstates.org/api/v1//legislators/?state=ak&active=true&last_name=Wilson&apikey=0b6a5cec96214c22b41cd8c4ba605d85';
 
-            $.get(url, null,
-            function (data) {
-                console.log(data);
-
-                // Function that renders the list items from our records
-                function ulWriter(rowIndex, record, columns, cellWriter) {
-                    //                    var cssClass = "span4", li;
-                    //                    if (rowIndex % 3 === 0) { cssClass += ' first'; }
-                    //                    li = '<li class="' + cssClass + '"><div class="thumbnail"><div class="thumbnail-image">' + record.thumbnail + '</div><div class="caption">' + record.caption + '</div></div></li>';
-                    //                    return li;
-
-                    var legis = '';
-
-                    legis += '<div class="col-md-4">';
-                    legis += '    <div>';
-                    legis += '        <div>';
-                    legis += '            <img src="' + record.photo_url + '" alt="Legislator"  class="img-thumbnail" />';
-                    legis += '        </div>';
-                    legis += '    </div>';
-                    legis += '</div>';
-                    legis += '<div class="col-md-8">';
-                    legis += '    <div class="caption">';
-                    legis += '        <h3 style="margin-top : 3px;">';
-                    legis += '            ' + record.full_name + '</h3>';
-                    legis += '        <p>';
-                    legis += '            Party: ' + record.party + '</p>';
-                    legis += '        <p>';
-                    legis += '            District: ' + record.district + '</p>';
-                    legis += '        <p>';
-                    legis += '            Level: ' + record.level + '</p>';
-                    legis += '        <p>';
-                    legis += '            <a href="' + record.url + '" target="_blank" class="btn btn-default">';
-                    legis += '                Public Profile</a>';
-                    legis += '        </p>';
-                    legis += '    </div>';
-                    legis += '</div>';
-
-                    return legis;
-
-                }
-
-                // Function that creates our records from the DOM when the page is loaded
-                function ulReader(index, li, record) {
-                    var $li = $(li),
-      $caption = $li.find('.caption');
-                    record.thumbnail = $li.find('.thumbnail-image').html();
-                    record.caption = $caption.html();
-                    record.label = $caption.find('h3').text();
-                    record.description = $caption.find('p').text();
-                    record.color = $li.data('color');
-                }
-
-                $('#my-legislator-results').dynatable({
-                    dataset: {
-                        records: data,
-                        perPageDefault: 1,
-                        page: 0
-                    },
-                    table: {
-                        bodyRowSelector: 'div'
-                    },
-                    features: {
-                        search: false,
-                        perPageSelect: false,
-                        recordCount: false
-                    },
-                    writers: {
-                        _rowWriter: ulWriter
-                    },
-                    readers: {
-                        _rowReader: ulReader
-                    }
-                });
-
-            }, 'jsonp');
 
             //    var $records = $('#json-records'),
             //    myRecords = JSON.parse($records.text());
@@ -346,6 +273,102 @@ $(document).ready(function () {
 
         },
 
+        this.searchLegislators = function (data, event) {
+
+            var self = this;
+
+            console.log('Searching for: ' + self.Search());
+
+            //OpenStates.org API - Legislators by last name.
+            var url = 'http://openstates.org/api/v1//legislators/?state=ak&active=true&last_name=' + self.Search() + '&apikey=' + OSKey;
+
+            // Function that renders the list items from our records
+            function ulWriter(rowIndex, record, columns, cellWriter) {
+
+                var legis = '';
+
+                legis += '<div class="col-md-4">';
+                legis += '    <div>';
+                legis += '        <div>';
+                legis += '            <img src="' + record.photo_url + '" alt="Legislator"  class="img-thumbnail" />';
+                legis += '        </div>';
+                legis += '    </div>';
+                legis += '</div>';
+                legis += '<div class="col-md-8">';
+                legis += '    <div class="caption">';
+                legis += '        <h3 style="margin-top : 3px;">';
+                legis += '            ' + record.full_name + '</h3>';
+                legis += '        <p>';
+                legis += '            Party: ' + record.party + '</p>';
+                legis += '        <p>';
+                legis += '            District: ' + record.district + '</p>';
+                legis += '        <p>';
+                legis += '            Level: ' + record.level + '</p>';
+                legis += '        <p>';
+                legis += '            <a href="' + record.url + '" target="_blank" class="btn btn-default">';
+                legis += '                Public Profile</a>';
+                legis += '        </p>';
+                legis += '    </div>';
+                legis += '</div>';
+
+                return legis;
+
+            }
+
+            // Function that creates our records from the DOM when the page is loaded
+            function ulReader(index, li, record) {
+                var $li = $(li),
+                $caption = $li.find('.caption');
+                record.thumbnail = $li.find('.thumbnail-image').html();
+                record.caption = $caption.html();
+                record.label = $caption.find('h3').text();
+                record.description = $caption.find('p').text();
+                record.color = $li.data('color');
+            }
+
+            var $dynatable = $('#my-legislator-results').dynatable({
+                dataset: {
+                    perPageDefault: 1,
+                    page: 0,
+                    records: null
+                },
+                table: {
+                    bodyRowSelector: 'div'
+                },
+                features: {
+                    search: false,
+                    perPageSelect: false,
+                    recordCount: false
+                },
+                writers: {
+                    _rowWriter: ulWriter
+                },
+                readers: {
+                    _rowReader: ulReader
+                }
+            }).data('dynatable');
+
+
+
+            $.get(url, null,
+            function (data) {
+
+                console.log(data);
+
+                //Update table
+                $dynatable.settings.dataset.originalRecords = data;
+                $dynatable.settings.dataset.page = 1;
+                $dynatable.process();
+
+                if ($dynatable.settings.dataset.queryRecordCount == 0) {
+                    $dynatable.hide();
+                } else {
+                    $dynatable.show();
+                }
+
+            }, 'jsonp');
+
+        },
         //Phrase Methods
         this.anchorPhrases = function () {
 

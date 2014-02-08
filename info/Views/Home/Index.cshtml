@@ -23,6 +23,22 @@
                 <li><a href="@Url.Action("Senate")">Senate Legislation</a></li>
                 <li><a href="@Url.Action("House")">House Legislation</a></li>
             </ul>
+            <ul class="nav navbar-nav navbar-right">
+                @if (User.Identity.IsAuthenticated)
+                {
+                    <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">myAccount<b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="@Url.Action("Index", new { Controller = "Account" })">Account Home</a></li>
+                            <li class="divider"></li>
+                            <li><a href="@Url.Action("LogOff", new { Controller = "Account" })">Log Out</a></li>
+                        </ul>
+                    </li>
+                }
+                else
+                { 
+                    <li><a href="@Url.Action("Index", new { Controller = "Account" })">myAccount</a></li>
+                }
+            </ul>
         </div>
         <!--/.nav-collapse -->
     </div>

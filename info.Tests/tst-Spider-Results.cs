@@ -150,12 +150,12 @@ namespace info.Tests
         /// <summary>
         /// Primary spider index and save to the result's .state file. 
         /// </summary>
-        //[TestMethod]
+        [TestMethod]
         public void Run_Spider_On_Activity_Parsing_Using_iFollower_And_Saving_Using_GitCollector()
         {
 
             DateTime Start = new DateTime(2013, 1, 1);
-            DateTime End = new DateTime(2013, 12, 21);
+            DateTime End = new DateTime(2013, 12, 31);
 
             WebSiteDownloaderOptions options =
                new WebSiteDownloaderOptions();
@@ -206,12 +206,12 @@ namespace info.Tests
 
         }
 
-        [TestMethod]
+        //[TestMethod]
         public void Run_Spider_Inflate_And_Save_Results_To_GitHub()
         {
 
             DateTime Start = new DateTime(2013, 1, 1);
-            DateTime End = new DateTime(2013, 12, 21);
+            DateTime End = new DateTime(2013, 12, 31);
 
             WebSiteDownloaderOptions options =
              new WebSiteDownloaderOptions();

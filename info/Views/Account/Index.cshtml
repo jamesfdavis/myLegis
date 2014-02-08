@@ -1,0 +1,66 @@
+﻿@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section css {
+    @Styles.Render("~/Content/narrowjumbo")
+}
+<div class="container">
+    <!-- Static navbar -->
+    <div class="navbar navbar-default" role="navigation">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="sr-only">Toggle navigation</span> <span class="icon-bar"></span><span
+                    class="icon-bar"></span><span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#">myLegis</a>
+        </div>
+        <div class="navbar-collapse collapse">
+            <ul class="nav navbar-nav">
+                <li><a href="@Url.Action("Index", new { Controller = "Home" })">Home</a></li>
+                <li><a href="@Url.Action("Senate")">Senate Legislation</a></li>
+                <li><a href="@Url.Action("House")">House Legislation</a></li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                @if (User.Identity.IsAuthenticated)
+                {
+                    <li class="dropdown active"><a href="#" class="dropdown-toggle" data-toggle="dropdown">myAccount<b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="@Url.Action("Index", new { Controller = "Account" })">Account Home</a></li>
+                            <li class="divider"></li>
+                            <li><a href="@Url.Action("LogOff", new { Controller = "Account" })">Log Out</a></li>
+                        </ul>
+                    </li>
+                }
+            </ul>
+        </div>
+        <!--/.nav-collapse -->
+    </div>
+    <ol class="breadcrumb">
+        <li><a href="@Url.Action("Index", new { Controller = "Home" })">Home</a> </li>
+        <li class="active">myAccount</li>
+    </ol>
+    <div class="row marketing">
+        <div class="col-lg-6">
+            <h4>
+                Welcome @User.Identity.Name!</h4>
+            <p>
+                From here, you can personalize your user experience.</p>
+            <h4>
+                Track Bills</h4>
+            <p>
+                Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Cras mattis consectetur
+                purus sit amet fermentum.</p>
+        </div>
+        <div class="col-lg-6">
+            <h4>
+                Coming Soon!</h4>
+            <p>
+                More Stuff..</p>
+        </div>
+    </div>
+    <div class="footer">
+        @Html.Partial("_footer")
+    </div>
+</div>
+<!-- /container -->
