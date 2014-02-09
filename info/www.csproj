@@ -340,6 +340,9 @@
     <Content Include="Views\Shared\_panel-definition-joint-resolution.cshtml" />
     <Content Include="Views\Shared\_navbar-myaccount.cshtml" />
     <Content Include="Views\Shared\_navbar-primary-navigation.cshtml" />
+    <Content Include="Views\Home\404.cshtml" />
+    <Content Include="Views\Home\500.cshtml" />
+    <Content Include="Views\Home\Error.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\WebSpider\spider.csproj">

@@ -80,6 +80,26 @@ namespace info.Controllers
 
         }
 
+        [HttpGet]
+        [ActionName("404")]
+        public ViewResult FileNotFound()
+        {
+            return View();
+        }
+
+        [HttpGet]
+        [ActionName("500")]
+        public ViewResult ServerError()
+        {
+            return View();
+        }
+
+        [HttpGet]
+        public ViewResult Error()
+        {
+            return View();
+        }
+
     }
 
 }

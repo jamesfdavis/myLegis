@@ -25,7 +25,7 @@ namespace info.Models
             //Locate the bill
             String dataDir = String.Format(@"{0}{1}\{2}",
                                     ConfigurationManager.AppSettings["appData"],
-                                    28, id);
+                                    ConfigurationManager.AppSettings["appSession"], id);
 
             GitBill gb = null;
 
@@ -155,7 +155,7 @@ namespace info.Models
             //Locate the bill
             String dataDir = String.Format(@"{0}{1}",
                                     ConfigurationManager.AppSettings["appData"],
-                                    28);
+                                    ConfigurationManager.AppSettings["appSession"]);
 
             GitBill gb = null;
             DirectoryInfo di = new DirectoryInfo(dataDir);

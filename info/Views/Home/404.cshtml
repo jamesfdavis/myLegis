@@ -1,9 +1,9 @@
-﻿@model List<info.Models.SessionList>
-@using System.Configuration;
-@{
-    ViewBag.Title = "myLegis";
+﻿@{
+    ViewBag.Title = "404 Error";
     Layout = "~/Views/Shared/_Layout.cshtml";
-    
+}
+@section head {
+    <meta name="ROBOTS" content="NOINDEX, NOFOLLOW" />
 }
 @section css {
     @Styles.Render("~/Content/narrowjumbo")
@@ -25,28 +25,14 @@
         <!--/.nav-collapse -->
     </div>
     <ol class="breadcrumb">
-        <li class="active">Home</li>
+        <li><a href="@Url.Action("Index")">Home</a> </li>
+        <li class="active">Resource Not Found</li>
     </ol>
     <div class="jumbotron">
-        <h2>
-            Alaska State Legislation Tracking</h2>
+        <h3>
+            Error 404: Resource not found!</h3>
         <p class="lead">
-            Track legislative bills and resolutions as they make their way through the
-            @String.Format("{0}th", ConfigurationManager.AppSettings["appSession"]) Alaska Legislature.</p>
-    </div>
-    <div class="row marketing">
-        <div class="col-lg-6">
-            <h4>
-                GitHub Compare View</h4>
-            <p>
-                Compare the differences in a bill as it passes through the process.</p>
-        </div>
-        <div class="col-lg-6">
-            <h4>
-                Tracking System</h4>
-            <p>
-                Login with your Google or Yahoo OpenID account, and track specific legislation.</p>
-        </div>
+            The resource you are requesting could not be found.</p>
     </div>
     <div class="footer">
         @Html.Partial("_footer")

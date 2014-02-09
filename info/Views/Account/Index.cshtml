@@ -2,6 +2,9 @@
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+@section head {
+    <meta name="ROBOTS" content="NOINDEX, NOFOLLOW" />
+}
 @section css {
     @Styles.Render("~/Content/narrowjumbo")
 }
@@ -21,9 +24,9 @@
                 <li class="dropdown active"><a href="#" class="dropdown-toggle" data-toggle="dropdown">
                     myAccount<b class="caret"></b></a>
                     <ul class="dropdown-menu">
-                        <li><a href="@Url.Action("Index", new { Controller = "Account" })">Account Home</a></li>
+                        <li><a href="@Url.Action("Index", new { Controller = "acct" })">Account Home</a></li>
                         <li class="divider"></li>
-                        <li><a href="@Url.Action("LogOff", new { Controller = "Account" })">Log Out</a></li>
+                        <li><a href="@Url.Action("LogOff", new { Controller = "acct" })">Log Out</a></li>
                     </ul>
                 </li>
             </ul>
