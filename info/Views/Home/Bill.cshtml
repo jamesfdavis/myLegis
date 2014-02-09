@@ -49,8 +49,8 @@
                             <label for="inpOSProfile" class="col-md-3 control-label">
                                 Search:</label>
                             <div class="col-md-6">
-                                <input id="inpSearch" name="inpSearch" type="text" 
-                                data-bind="value : Search, valueUpdate: 'afterkeyup', returnAction: $root.searchLegislators" class="form-control" />
+                                <input id="inpSearch" name="inpSearch" type="text" data-bind="value : Search, valueUpdate: 'afterkeyup', returnAction: $root.searchLegislators"
+                                    class="form-control" />
                             </div>
                             <div class="col-md-3">
                                 <button type="button" class="btn btn-info" data-bind="click : $root.searchLegislators">
@@ -66,8 +66,7 @@
                                 padding-top: 5px; margin-bottom: 3px;">
                             </div>
                         </div>
-
-                       @* <div class="form-group">
+                        @* <div class="form-group">
                             <label class="col-md-3 control-label">
                                 &nbsp;
                             </label>
@@ -75,7 +74,6 @@
                                 <a href="#" class="btn btn-primary">Select this Legislator</a>
                             </div>
                         </div>*@
-
                         </form>
                     </div>
                     <div class="tab-pane" id="tabNGO">
@@ -138,14 +136,11 @@
                 <span class="sr-only">Toggle navigation</span> <span class="icon-bar"></span><span
                     class="icon-bar"></span><span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="#">myLegis</a>
+            <a class="navbar-brand" href="@Url.Action("Index", new { Controller = "Home" })">myLegis</a>
         </div>
         <div class="navbar-collapse collapse">
-            <ul class="nav navbar-nav">
-                <li><a href="@Url.Action("Index")">Home</a></li>
-                <li><a href="@Url.Action("Senate")">Senate Legislation</a></li>
-                <li><a href="@Url.Action("House")">House Legislation</a></li>
-            </ul>
+            @Html.Partial("_navbar-primary-navigation")
+            @Html.Partial("_navbar-myaccount")
         </div>
         <!--/.nav-collapse -->
     </div>

@@ -15,14 +15,14 @@
                 <span class="sr-only">Toggle navigation</span> <span class="icon-bar"></span><span
                     class="icon-bar"></span><span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="#">myLegis</a>
+            <a class="navbar-brand" href="@Url.Action("Index", new { Controller = "Home" })">myLegis</a>
         </div>
         <div class="navbar-collapse collapse">
             <ul class="nav navbar-nav">
-                <li><a href="@Url.Action("Index")">Home</a></li>
                 <li class="active"><a href="#">Senate Legislation</a></li>
                 <li><a href="@Url.Action("House")">House Legislation</a></li>
             </ul>
+            @Html.Partial("_navbar-myaccount")
         </div>
         <!--/.nav-collapse -->
     </div>

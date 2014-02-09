@@ -338,6 +338,8 @@
     <Content Include="Views\Shared\_panel-definition-resolution.cshtml" />
     <Content Include="Views\Shared\_panel-definition-concurrent-resolution.cshtml" />
     <Content Include="Views\Shared\_panel-definition-joint-resolution.cshtml" />
+    <Content Include="Views\Shared\_navbar-myaccount.cshtml" />
+    <Content Include="Views\Shared\_navbar-primary-navigation.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\WebSpider\spider.csproj">

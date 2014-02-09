@@ -18,28 +18,8 @@
             <a class="navbar-brand" href="#">myLegis</a>
         </div>
         <div class="navbar-collapse collapse">
-            <ul class="nav navbar-nav">
-                <li class="active"><a href="@Url.Action("Index")">Home</a></li>
-                <li><a href="@Url.Action("Senate")">Senate Legislation</a></li>
-                <li><a href="@Url.Action("House")">House Legislation</a></li>
-            </ul>
-            <ul class="nav navbar-nav navbar-right">
-                @if (User.Identity.IsAuthenticated)
-                {
-                    <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">myAccount<b
-                        class="caret"></b></a>
-                        <ul class="dropdown-menu">
-                            <li><a href="@Url.Action("Index", new { Controller = "Account" })">Account Home</a></li>
-                            <li class="divider"></li>
-                            <li><a href="@Url.Action("LogOff", new { Controller = "Account" })">Log Out</a></li>
-                        </ul>
-                    </li>
-                }
-                else
-                { 
-                    <li><a href="@Url.Action("Index", new { Controller = "Account" })">myAccount</a></li>
-                }
-            </ul>
+            @Html.Partial("_navbar-primary-navigation")
+            @Html.Partial("_navbar-myaccount")
         </div>
         <!--/.nav-collapse -->
     </div>
@@ -50,7 +30,8 @@
         <h2>
             Alaska Legislature Tracking</h2>
         <p class="lead">
-            Track the legislator's bills and resolutions as they make their way through the alaska legislature.</p>
+            Track the legislator's bills and resolutions as they make their way through the
+            alaska legislature.</p>
     </div>
     <div class="row marketing">
         <div class="col-lg-6">
