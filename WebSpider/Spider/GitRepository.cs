@@ -194,7 +194,6 @@ namespace myLegis.Spider
 
                 if (ts > 90)
                 {
-
                     #region Update Bill
 
                     //Deserialize the Bill.
@@ -274,11 +273,11 @@ namespace myLegis.Spider
                             DocumentCopy dc = (DocumentCopy)iCopy;
 
                             //Document content
-                            gb.Copy = dc.copy;
+                            gb.Copy = Remove_Illegal_UTF8_Characters(dc.copy);
 
                             //Save to Git
                             ObjectId blobId = ProcessContent(
-                                  dc.copy,
+                                  (dc.copy.ToString().Substring(0, 2) == "\r\n") ? dc.copy.Remove(0, 2) : dc.copy, //Remove leading CRLF,
                                   contentPath.ToString(),
                                   @"content.txt",
                                   hist.OfferDate.HasValue ? String.Format("Legislative content updated on {0} to {1}.",
@@ -389,7 +388,7 @@ namespace myLegis.Spider
                                                Audio_Url = j.UrlAudio,
                                                Minutes_Url = j.UrlText,
                                                DateTime = j.Date,
-                                               Note = iCopy != null ? iCopy.copy : @""
+                                               Note = iCopy != null ? Remove_Illegal_UTF8_Characters(iCopy.copy) : @""
                                            }).ToList();
 
                                 //Add minute details.
@@ -492,11 +491,11 @@ namespace myLegis.Spider
                         DocumentCopy dc = (DocumentCopy)iCopy;
 
                         //Document content
-                        gb.Copy = dc.copy;
+                        gb.Copy = Remove_Illegal_UTF8_Characters(dc.copy);
 
                         //Save to Git
                         ObjectId blobId = ProcessContent(
-                              dc.copy,
+                            (dc.copy.ToString().Substring(0,2) == "\r\n") ? dc.copy.Remove(0,2) : dc.copy, //Remove leading CRLF
                               contentPath.ToString(),
                               @"content.txt",
                               hist.OfferDate.HasValue ? String.Format("Legislative content updated on {0} to {1}.",
@@ -602,7 +601,7 @@ namespace myLegis.Spider
                                 Audio_Url = j.UrlAudio,
                                 Minutes_Url = j.UrlText,
                                 DateTime = j.Date,
-                                Note = iCopy != null ? iCopy.copy : @""
+                                Note = iCopy != null ? Remove_Illegal_UTF8_Characters(iCopy.copy) : @""
                             });
 
                             //if (iCopy != null)
@@ -649,6 +648,28 @@ namespace myLegis.Spider
             }
         }
 
+        private static string Remove_Illegal_UTF8_Characters(string inString)
+        {
+            if (inString == null) return null;
+
+            StringBuilder newString = new StringBuilder();
+            char ch;
+
+            for (int i = 0; i < inString.Length; i++)
+            {
+
+                ch = inString[i];
+                // remove any characters outside the valid UTF-8 range as well as all control characters
+                // except tabs and new lines
+                if ((ch < 0x00FD && ch > 0x001F) || ch == '\t' || ch == '\n' || ch == '\r')
+                {
+                    newString.Append(ch);
+                }
+            }
+            return newString.ToString();
+
+        }
+
     }
 
     public class ParsedBill
@@ -660,4 +681,5 @@ namespace myLegis.Spider
         public List<iCollector> committee { get; set; }
         public String fileLoc { get; set; }
     }
+
 }

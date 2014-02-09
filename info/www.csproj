@@ -334,6 +334,10 @@
     <Content Include="Views\Account\LogOn.cshtml" />
     <Content Include="Views\Account\Index.cshtml" />
     <Content Include="Views\Account\LogOff.cshtml" />
+    <Content Include="Views\Shared\_panel-definition-bill.cshtml" />
+    <Content Include="Views\Shared\_panel-definition-resolution.cshtml" />
+    <Content Include="Views\Shared\_panel-definition-concurrent-resolution.cshtml" />
+    <Content Include="Views\Shared\_panel-definition-joint-resolution.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\WebSpider\spider.csproj">
