@@ -190,7 +190,7 @@ namespace info.Tests
             //Specialized content filter using regular expression matches.
             var d = new Dictionary<String, Regex>();
             d.Add("Bill Name", new Regex(@"(?<=<b>BILL:</b>)[a-z,\s,\w,(,),"",',;,.]{5,800}", RegexOptions.IgnoreCase));
-            d.Add("Title", new Regex(@"(?<=<b>TITLE:</b>)[a-z,\s,\w,(,),"",',\-,;,.]{5,800}", RegexOptions.IgnoreCase));
+            d.Add("Title", new Regex(@"(?<=<b>TITLE:</b>)[a-z,\s,\w,(,),"",',\-,;,.]{5,5000}", RegexOptions.IgnoreCase));
             d.Add("Short Title", new Regex(@"(?<=<b>SHORT TITLE:</b>)(.*)(?=</font>)", RegexOptions.IgnoreCase));
             d.Add("Status Date", new Regex(@"(?<=<b>STATUS DATE:</b>)[0-9,/\,\w\s]{5,50}", RegexOptions.IgnoreCase));
             d.Add("Current Status", new Regex(@"(?<=<b>CURRENT STATUS:</b>)[a-z,\s,&,\ ,(,),/,0-9]{2,60}", RegexOptions.IgnoreCase));

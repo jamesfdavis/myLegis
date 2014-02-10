@@ -74,22 +74,6 @@ namespace info.Models
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        public ObjectSet<Person> People
-        {
-            get
-            {
-                if ((_People == null))
-                {
-                    _People = base.CreateObjectSet<Person>("People");
-                }
-                return _People;
-            }
-        }
-        private ObjectSet<Person> _People;
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
         public ObjectSet<Phrase> Phrases
         {
             get
@@ -102,18 +86,42 @@ namespace info.Models
             }
         }
         private ObjectSet<Phrase> _Phrases;
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        public ObjectSet<User> Users
+        {
+            get
+            {
+                if ((_Users == null))
+                {
+                    _Users = base.CreateObjectSet<User>("Users");
+                }
+                return _Users;
+            }
+        }
+        private ObjectSet<User> _Users;
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        public ObjectSet<Person> People
+        {
+            get
+            {
+                if ((_People == null))
+                {
+                    _People = base.CreateObjectSet<Person>("People");
+                }
+                return _People;
+            }
+        }
+        private ObjectSet<Person> _People;
 
         #endregion
 
         #region AddTo Methods
-    
-        /// <summary>
-        /// Deprecated Method for adding a new object to the People EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
-        /// </summary>
-        public void AddToPeople(Person person)
-        {
-            base.AddObject("People", person);
-        }
     
         /// <summary>
         /// Deprecated Method for adding a new object to the Phrases EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
@@ -121,6 +129,22 @@ namespace info.Models
         public void AddToPhrases(Phrase phrase)
         {
             base.AddObject("Phrases", phrase);
+        }
+    
+        /// <summary>
+        /// Deprecated Method for adding a new object to the Users EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
+        /// </summary>
+        public void AddToUsers(User user)
+        {
+            base.AddObject("Users", user);
+        }
+    
+        /// <summary>
+        /// Deprecated Method for adding a new object to the People EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
+        /// </summary>
+        public void AddToPeople(Person person)
+        {
+            base.AddObject("People", person);
         }
 
         #endregion
@@ -147,12 +171,16 @@ namespace info.Models
         /// <param name="id">Initial value of the ID property.</param>
         /// <param name="copyID">Initial value of the CopyID property.</param>
         /// <param name="session">Initial value of the Session property.</param>
-        public static Person CreatePerson(global::System.Int32 id, global::System.Int32 copyID, global::System.Int32 session)
+        /// <param name="leg_ID">Initial value of the Leg_ID property.</param>
+        /// <param name="fullName">Initial value of the FullName property.</param>
+        public static Person CreatePerson(global::System.Int32 id, global::System.Int32 copyID, global::System.Int32 session, global::System.String leg_ID, global::System.String fullName)
         {
             Person person = new Person();
             person.ID = id;
             person.CopyID = copyID;
             person.Session = session;
+            person.Leg_ID = leg_ID;
+            person.FullName = fullName;
             return person;
         }
 
@@ -214,78 +242,6 @@ namespace info.Models
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
-        [DataMemberAttribute()]
-        public global::System.String FirstName
-        {
-            get
-            {
-                return _FirstName;
-            }
-            set
-            {
-                OnFirstNameChanging(value);
-                ReportPropertyChanging("FirstName");
-                _FirstName = StructuralObject.SetValidValue(value, true);
-                ReportPropertyChanged("FirstName");
-                OnFirstNameChanged();
-            }
-        }
-        private global::System.String _FirstName;
-        partial void OnFirstNameChanging(global::System.String value);
-        partial void OnFirstNameChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
-        [DataMemberAttribute()]
-        public global::System.String LastName
-        {
-            get
-            {
-                return _LastName;
-            }
-            set
-            {
-                OnLastNameChanging(value);
-                ReportPropertyChanging("LastName");
-                _LastName = StructuralObject.SetValidValue(value, true);
-                ReportPropertyChanged("LastName");
-                OnLastNameChanged();
-            }
-        }
-        private global::System.String _LastName;
-        partial void OnLastNameChanging(global::System.String value);
-        partial void OnLastNameChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
-        [DataMemberAttribute()]
-        public global::System.Byte[] Photo
-        {
-            get
-            {
-                return StructuralObject.GetValidValue(_Photo);
-            }
-            set
-            {
-                OnPhotoChanging(value);
-                ReportPropertyChanging("Photo");
-                _Photo = StructuralObject.SetValidValue(value, true);
-                ReportPropertyChanged("Photo");
-                OnPhotoChanged();
-            }
-        }
-        private global::System.Byte[] _Photo;
-        partial void OnPhotoChanging(global::System.Byte[] value);
-        partial void OnPhotoChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
         [DataMemberAttribute()]
         public global::System.Int32 Session
@@ -310,50 +266,50 @@ namespace info.Models
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
         [DataMemberAttribute()]
-        public global::System.String LegisProfile
+        public global::System.String Leg_ID
         {
             get
             {
-                return _LegisProfile;
+                return _Leg_ID;
             }
             set
             {
-                OnLegisProfileChanging(value);
-                ReportPropertyChanging("LegisProfile");
-                _LegisProfile = StructuralObject.SetValidValue(value, true);
-                ReportPropertyChanged("LegisProfile");
-                OnLegisProfileChanged();
+                OnLeg_IDChanging(value);
+                ReportPropertyChanging("Leg_ID");
+                _Leg_ID = StructuralObject.SetValidValue(value, false);
+                ReportPropertyChanged("Leg_ID");
+                OnLeg_IDChanged();
             }
         }
-        private global::System.String _LegisProfile;
-        partial void OnLegisProfileChanging(global::System.String value);
-        partial void OnLegisProfileChanged();
+        private global::System.String _Leg_ID;
+        partial void OnLeg_IDChanging(global::System.String value);
+        partial void OnLeg_IDChanged();
     
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
         [DataMemberAttribute()]
-        public global::System.String WikiProfile
+        public global::System.String FullName
         {
             get
             {
-                return _WikiProfile;
+                return _FullName;
             }
             set
             {
-                OnWikiProfileChanging(value);
-                ReportPropertyChanging("WikiProfile");
-                _WikiProfile = StructuralObject.SetValidValue(value, true);
-                ReportPropertyChanged("WikiProfile");
-                OnWikiProfileChanged();
+                OnFullNameChanging(value);
+                ReportPropertyChanging("FullName");
+                _FullName = StructuralObject.SetValidValue(value, false);
+                ReportPropertyChanged("FullName");
+                OnFullNameChanged();
             }
         }
-        private global::System.String _WikiProfile;
-        partial void OnWikiProfileChanging(global::System.String value);
-        partial void OnWikiProfileChanged();
+        private global::System.String _FullName;
+        partial void OnFullNameChanging(global::System.String value);
+        partial void OnFullNameChanged();
 
         #endregion
 
@@ -509,6 +465,163 @@ namespace info.Models
 
         #endregion
 
+    }
+    
+    /// <summary>
+    /// No Metadata Documentation available.
+    /// </summary>
+    [EdmEntityTypeAttribute(NamespaceName="www.Model", Name="User")]
+    [Serializable()]
+    [DataContractAttribute(IsReference=true)]
+    public partial class User : EntityObject
+    {
+        #region Factory Method
+    
+        /// <summary>
+        /// Create a new User object.
+        /// </summary>
+        /// <param name="id">Initial value of the ID property.</param>
+        /// <param name="claimedIdentifier">Initial value of the ClaimedIdentifier property.</param>
+        /// <param name="isAdmin">Initial value of the IsAdmin property.</param>
+        public static User CreateUser(global::System.Int32 id, global::System.String claimedIdentifier, global::System.Boolean isAdmin)
+        {
+            User user = new User();
+            user.ID = id;
+            user.ClaimedIdentifier = claimedIdentifier;
+            user.IsAdmin = isAdmin;
+            return user;
+        }
+
+        #endregion
+
+        #region Primitive Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 ID
+        {
+            get
+            {
+                return _ID;
+            }
+            set
+            {
+                if (_ID != value)
+                {
+                    OnIDChanging(value);
+                    ReportPropertyChanging("ID");
+                    _ID = StructuralObject.SetValidValue(value);
+                    ReportPropertyChanged("ID");
+                    OnIDChanged();
+                }
+            }
+        }
+        private global::System.Int32 _ID;
+        partial void OnIDChanging(global::System.Int32 value);
+        partial void OnIDChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.String ClaimedIdentifier
+        {
+            get
+            {
+                return _ClaimedIdentifier;
+            }
+            set
+            {
+                OnClaimedIdentifierChanging(value);
+                ReportPropertyChanging("ClaimedIdentifier");
+                _ClaimedIdentifier = StructuralObject.SetValidValue(value, false);
+                ReportPropertyChanged("ClaimedIdentifier");
+                OnClaimedIdentifierChanged();
+            }
+        }
+        private global::System.String _ClaimedIdentifier;
+        partial void OnClaimedIdentifierChanging(global::System.String value);
+        partial void OnClaimedIdentifierChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String Name
+        {
+            get
+            {
+                return _Name;
+            }
+            set
+            {
+                OnNameChanging(value);
+                ReportPropertyChanging("Name");
+                _Name = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("Name");
+                OnNameChanged();
+            }
+        }
+        private global::System.String _Name;
+        partial void OnNameChanging(global::System.String value);
+        partial void OnNameChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String Email
+        {
+            get
+            {
+                return _Email;
+            }
+            set
+            {
+                OnEmailChanging(value);
+                ReportPropertyChanging("Email");
+                _Email = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("Email");
+                OnEmailChanged();
+            }
+        }
+        private global::System.String _Email;
+        partial void OnEmailChanging(global::System.String value);
+        partial void OnEmailChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Boolean IsAdmin
+        {
+            get
+            {
+                return _IsAdmin;
+            }
+            set
+            {
+                OnIsAdminChanging(value);
+                ReportPropertyChanging("IsAdmin");
+                _IsAdmin = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("IsAdmin");
+                OnIsAdminChanged();
+            }
+        }
+        private global::System.Boolean _IsAdmin;
+        partial void OnIsAdminChanging(global::System.Boolean value);
+        partial void OnIsAdminChanged();
+
+        #endregion
+
+    
     }
 
     #endregion

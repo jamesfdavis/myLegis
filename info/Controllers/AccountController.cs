@@ -3,13 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.Security;
 using DotNetOpenAuth.OpenId.RelyingParty;
 using DotNetOpenAuth.OpenId.Extensions.SimpleRegistration;
 using DotNetOpenAuth.OpenId;
-using System.Web.Security;
 using DotNetOpenAuth.Messaging;
 using DotNetOpenAuth.OpenId.Extensions.AttributeExchange;
-
+using info.Models;
+using System.Data;
 namespace info.Controllers
 {
     /// <summary>
@@ -19,7 +20,7 @@ namespace info.Controllers
     {
         public string Email { get; set; }
         public string FullName { get; set; }
-
+        public bool IsAdmin { get; set; }
         public override string ToString()
         {
             return String.Format("{0}-{1}", Email, FullName);
@@ -33,13 +34,15 @@ namespace info.Controllers
     /// </summary>
     public class AccountController : Controller
     {
+
+        private Models.Entities db = new Models.Entities();
+
         #region Actions
 
         [HttpGet]
         [Authorize]
         public ViewResult Index()
         {
-
             return View();
         }
 
@@ -80,9 +83,9 @@ namespace info.Controllers
                     userData.FullName = claim.FullName;
                     //Grab Google Profile details
                     if (String.IsNullOrEmpty(claim.FullName) && fetch.Attributes.Count() != 0)
-                        userData.FullName = String.Format("{0} {1}", 
+                        userData.FullName = String.Format("{0} {1}",
                             fetch.Attributes["http://axschema.org/namePerson/first"].Values[0].ToString(),
-                            fetch.Attributes["http://axschema.org/namePerson/last"].Values[0].ToString());                    
+                            fetch.Attributes["http://axschema.org/namePerson/last"].Values[0].ToString());
                 }
 
                 //fallback to claim untrusted, as some OpenId providers may not
@@ -94,6 +97,39 @@ namespace info.Controllers
                     userData.Email = claimUntrusted.Email;
                     userData.FullName = claimUntrusted.FullName;
                 }
+
+                string cid = response.ClaimedIdentifier;
+
+                //RoundTrip to the DB
+                User usr = (from u in db.Users.Where(n => n.ClaimedIdentifier == cid)
+                            select u).FirstOrDefault();
+
+                if (usr != null)
+                {
+                    //Update the User
+                    usr.Email = userData.Email;
+                    usr.Name = userData.FullName;
+                    db.ObjectStateManager.ChangeObjectState(usr, EntityState.Modified);
+
+                    if (usr.IsAdmin)
+                        userData.IsAdmin = true;
+
+                    db.SaveChanges();
+                }
+                else
+                {
+                    //Insert the User
+                    db.Users.AddObject(new User
+                    {
+                        ClaimedIdentifier = response.ClaimedIdentifier,
+                        Email = userData.Email,
+                        IsAdmin = false,
+                        Name = userData.FullName
+                    });
+                    db.SaveChanges();
+                }
+
+
 
                 //now store Forms Authorization cookie 
                 IssueAuthTicket(userData, true);
@@ -169,7 +205,7 @@ namespace info.Controllers
             FormsAuthenticationTicket ticket =
                 new FormsAuthenticationTicket(1, userData.Email,
                     DateTime.Now, DateTime.Now.AddDays(10),
-                    rememberMe, userData.ToString());
+                    rememberMe, userData.IsAdmin == true ? "Admin" : "");
 
             string ticketString = FormsAuthentication.Encrypt(ticket);
             HttpCookie cookie = new HttpCookie(FormsAuthentication.FormsCookieName, ticketString);
