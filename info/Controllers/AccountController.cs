@@ -20,6 +20,7 @@ namespace info.Controllers
     {
         public string Email { get; set; }
         public string FullName { get; set; }
+        public string ClaimedIdentifier { get; set; }
         public bool IsAdmin { get; set; }
         public override string ToString()
         {
@@ -68,6 +69,8 @@ namespace info.Controllers
 
             if (response != null && response.Status == AuthenticationStatus.Authenticated)
             {
+                string cid = response.ClaimedIdentifier;
+
                 var claimUntrusted = response.GetUntrustedExtension<ClaimsResponse>();
                 var fetchUntrusted = response.GetUntrustedExtension<FetchResponse>();
 
@@ -79,6 +82,7 @@ namespace info.Controllers
                 if (claim != null)
                 {
                     userData = new UserData();
+                    userData.ClaimedIdentifier = cid;
                     userData.Email = claim.Email;
                     userData.FullName = claim.FullName;
                     //Grab Google Profile details
@@ -94,11 +98,10 @@ namespace info.Controllers
                 if (claimUntrusted != null && userData == null)
                 {
                     userData = new UserData();
+                    userData.ClaimedIdentifier = cid;
                     userData.Email = claimUntrusted.Email;
-                    userData.FullName = claimUntrusted.FullName;
+                    userData.FullName = claimUntrusted.FullName;  
                 }
-
-                string cid = response.ClaimedIdentifier;
 
                 //RoundTrip to the DB
                 User usr = (from u in db.Users.Where(n => n.ClaimedIdentifier == cid)
@@ -110,10 +113,9 @@ namespace info.Controllers
                     usr.Email = userData.Email;
                     usr.Name = userData.FullName;
                     db.ObjectStateManager.ChangeObjectState(usr, EntityState.Modified);
-
+                    //Setup role
                     if (usr.IsAdmin)
                         userData.IsAdmin = true;
-
                     db.SaveChanges();
                 }
                 else
@@ -128,8 +130,6 @@ namespace info.Controllers
                     });
                     db.SaveChanges();
                 }
-
-
 
                 //now store Forms Authorization cookie 
                 IssueAuthTicket(userData, true);
@@ -203,7 +203,7 @@ namespace info.Controllers
         private void IssueAuthTicket(UserData userData, bool rememberMe)
         {
             FormsAuthenticationTicket ticket =
-                new FormsAuthenticationTicket(1, userData.Email,
+                new FormsAuthenticationTicket(1, userData.ClaimedIdentifier.ToString(),
                     DateTime.Now, DateTime.Now.AddDays(10),
                     rememberMe, userData.IsAdmin == true ? "Admin" : "");
 

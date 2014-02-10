@@ -116,7 +116,7 @@
     </div>
 </div>
 <!-- container -->
-<div class="container">
+<div class="container" data="{ BillID: '@Model.Name.Replace(" ", "").Trim()'}">
     <!-- context menu -->
     <div id="contextMenu" class="dropdown clearfix">
         <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu" style="display: block;
@@ -172,13 +172,16 @@
                                     <tr>
                                         <th colspan="2" style="line-height: 25px;">
                                             @Html.Raw(@Model.ShortTitle)
-                                            <div class="pull-right" data-bind="with: Watch">
-                                                <a class="btn btn-default btn-xs" data-bind="click : Update">
-                                                <span data-bind="css: { 'glyphicon-star' : Watched(), 'glyphicon-star-empty' : Watched() == false }" class="glyphicon ">
-                                                </span><b><span data-bind="visible : Watched">&nbsp;Unwatch</span>
-                                                <span data-bind="visible : Watched() == false">Watch</span>
-                                                </b></a>
-                                            </div>
+                                            @if (User.Identity.IsAuthenticated)
+                                            {
+                                                <div id="divWatch" class="pull-right" data-bind="with: Watch">
+                                                    <a class="btn btn-default btn-xs" data-bind="click : MaintainState">
+                                                    <span data-bind="css: { 'glyphicon-star' : Watched(), 'glyphicon-star-empty' : Watched() == false }"
+                                                        class="glyphicon ">
+                                                    </span><b><span data-bind="visible : Watched">&nbsp;Unwatch</span>
+                                                    <span data-bind="visible : Watched() == false">Watch</span> </b></a>
+                                                </div> 
+                                            }
                                         </th>
                                     </tr>
                                 </thead>

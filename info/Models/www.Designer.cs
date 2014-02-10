@@ -118,6 +118,22 @@ namespace info.Models
             }
         }
         private ObjectSet<Person> _People;
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        public ObjectSet<Watch> Watches
+        {
+            get
+            {
+                if ((_Watches == null))
+                {
+                    _Watches = base.CreateObjectSet<Watch>("Watches");
+                }
+                return _Watches;
+            }
+        }
+        private ObjectSet<Watch> _Watches;
 
         #endregion
 
@@ -145,6 +161,14 @@ namespace info.Models
         public void AddToPeople(Person person)
         {
             base.AddObject("People", person);
+        }
+    
+        /// <summary>
+        /// Deprecated Method for adding a new object to the Watches EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
+        /// </summary>
+        public void AddToWatches(Watch watch)
+        {
+            base.AddObject("Watches", watch);
         }
 
         #endregion
@@ -618,6 +642,115 @@ namespace info.Models
         private global::System.Boolean _IsAdmin;
         partial void OnIsAdminChanging(global::System.Boolean value);
         partial void OnIsAdminChanged();
+
+        #endregion
+
+    
+    }
+    
+    /// <summary>
+    /// No Metadata Documentation available.
+    /// </summary>
+    [EdmEntityTypeAttribute(NamespaceName="www.Model", Name="Watch")]
+    [Serializable()]
+    [DataContractAttribute(IsReference=true)]
+    public partial class Watch : EntityObject
+    {
+        #region Factory Method
+    
+        /// <summary>
+        /// Create a new Watch object.
+        /// </summary>
+        /// <param name="id">Initial value of the ID property.</param>
+        /// <param name="claimedIdentifier">Initial value of the ClaimedIdentifier property.</param>
+        /// <param name="name">Initial value of the Name property.</param>
+        public static Watch CreateWatch(global::System.Int32 id, global::System.String claimedIdentifier, global::System.String name)
+        {
+            Watch watch = new Watch();
+            watch.ID = id;
+            watch.ClaimedIdentifier = claimedIdentifier;
+            watch.Name = name;
+            return watch;
+        }
+
+        #endregion
+
+        #region Primitive Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 ID
+        {
+            get
+            {
+                return _ID;
+            }
+            set
+            {
+                if (_ID != value)
+                {
+                    OnIDChanging(value);
+                    ReportPropertyChanging("ID");
+                    _ID = StructuralObject.SetValidValue(value);
+                    ReportPropertyChanged("ID");
+                    OnIDChanged();
+                }
+            }
+        }
+        private global::System.Int32 _ID;
+        partial void OnIDChanging(global::System.Int32 value);
+        partial void OnIDChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.String ClaimedIdentifier
+        {
+            get
+            {
+                return _ClaimedIdentifier;
+            }
+            set
+            {
+                OnClaimedIdentifierChanging(value);
+                ReportPropertyChanging("ClaimedIdentifier");
+                _ClaimedIdentifier = StructuralObject.SetValidValue(value, false);
+                ReportPropertyChanged("ClaimedIdentifier");
+                OnClaimedIdentifierChanged();
+            }
+        }
+        private global::System.String _ClaimedIdentifier;
+        partial void OnClaimedIdentifierChanging(global::System.String value);
+        partial void OnClaimedIdentifierChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.String Name
+        {
+            get
+            {
+                return _Name;
+            }
+            set
+            {
+                OnNameChanging(value);
+                ReportPropertyChanging("Name");
+                _Name = StructuralObject.SetValidValue(value, false);
+                ReportPropertyChanged("Name");
+                OnNameChanged();
+            }
+        }
+        private global::System.String _Name;
+        partial void OnNameChanging(global::System.String value);
+        partial void OnNameChanged();
 
         #endregion
 

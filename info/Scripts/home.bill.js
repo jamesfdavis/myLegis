@@ -101,13 +101,49 @@ $(document).ready(function () {
 
         //Basic properties.
         self.Watched = ko.observable(false);
-        self.Bill = ko.observable('');
+        self.Bill = ko.observable($(".container").metadata().BillID);
 
-        self.Update = function () {
-            if (self.Watched() == false) {
-                self.Watched(true);
-            } else { self.Watched(false); }
+        self.MaintainState = function () {
+            self.Save();
+        },
+        self.Save = function () {
+            //Try to create the Person
+            $.ajax({
+                type: "PUT",
+                cache: false,
+                url: "/API/Watch/",
+                data: { Name: self.Bill() },
+                dataType: "json"
+            })
+            .done(function (data) {
+                //Set the Person ID
+                self.Watched(data);
+            }).fail(function (data, status) {
+                serverErrors(data);
+            }).always(function () {
+                //Complete
+            });
+        },
+        self.Load = function () {
+            if ($('#divWatch').length != 0) {
+                //Try to create the Person
+                $.ajax({
+                    type: "GET",
+                    cache: false,
+                    url: "/API/Watch/" + self.Bill(),
+                    dataType: "json"
+                })
+                .done(function (data) {
+                    //Set the Person ID
+                    self.Watched(data);
+                }).fail(function (data, status) {
+                    serverErrors(data);
+                }).always(function () {
+                    //Complete
+                });
+            }
         }
+        self.Load(); //Load current state.
     }
 
     //KO Model - Person

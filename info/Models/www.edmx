@@ -9,6 +9,7 @@
           <EntitySet Name="Person" EntityType="www.Model.Store.Person" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="Phrase" EntityType="www.Model.Store.Phrase" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="Users" EntityType="www.Model.Store.Users" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Watch" EntityType="www.Model.Store.Watch" store:Type="Tables" Schema="dbo" />
           <AssociationSet Name="FK_Person_Phrase" Association="www.Model.Store.FK_Person_Phrase">
             <End Role="Phrase" EntitySet="Phrase" />
             <End Role="Person" EntitySet="Person" />
@@ -41,6 +42,14 @@
           <Property Name="Email" Type="varchar" MaxLength="250" />
           <Property Name="IsAdmin" Type="bit" Nullable="false" />
         </EntityType>
+        <EntityType Name="Watch">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="ClaimedIdentifier" Type="varchar(max)" Nullable="false" />
+          <Property Name="Name" Type="varchar" Nullable="false" MaxLength="7" />
+        </EntityType>
         <Association Name="FK_Person_Phrase">
           <End Role="Phrase" Type="www.Model.Store.Phrase" Multiplicity="1" />
           <End Role="Person" Type="www.Model.Store.Person" Multiplicity="*" />
@@ -65,6 +74,7 @@
             <End Role="Phrase" EntitySet="Phrases" />
             <End Role="Person" EntitySet="People" />
           </AssociationSet>
+          <EntitySet Name="Watches" EntityType="www.Model.Watch" />
         </EntityContainer>
         <EntityType Name="Phrase">
           <Key>
@@ -107,6 +117,14 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="Watch">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Type="Int32" Name="ID" Nullable="false" />
+          <Property Type="String" Name="ClaimedIdentifier" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="Name" Nullable="false" MaxLength="7" FixedLength="false" Unicode="false" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -143,6 +161,15 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="Watches">
+            <EntityTypeMapping TypeName="www.Model.Watch">
+              <MappingFragment StoreEntitySet="Watch">
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="ClaimedIdentifier" ColumnName="ClaimedIdentifier" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
@@ -171,6 +198,7 @@
           <ConnectorPoint PointX="2.25" PointY="2.172841796875" />
           <ConnectorPoint PointX="3" PointY="2.172841796875" />
         </AssociationConnector>
+        <EntityTypeShape EntityType="www.Model.Watch" Width="1.5" PointX="7.125" PointY="0.75" Height="1.5956835937499996" />
       </Diagram>
     </Diagrams>
   </Designer>
