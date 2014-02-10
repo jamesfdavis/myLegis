@@ -2,7 +2,6 @@
 @{
     ViewBag.Title = @Model.Name + @" - myLegis";
     Layout = "~/Views/Shared/_Layout.cshtml";
-
 }
 @section css {
     @Styles.Render("~/Content/narrowjumbo")
@@ -171,15 +170,23 @@
                             <table class="table table-condensed">
                                 <thead>
                                     <tr>
-                                        <th colspan="2">
+                                        <th colspan="2" style="line-height: 25px;">
                                             @Html.Raw(@Model.ShortTitle)
+                                            <div class="pull-right" data-bind="with: Watch">
+                                                <a class="btn btn-default btn-xs" data-bind="click : Update">
+                                                <span data-bind="css: { 'glyphicon-star' : Watched(), 'glyphicon-star-empty' : Watched() == false }" class="glyphicon ">
+                                                </span><b><span data-bind="visible : Watched">&nbsp;Unwatch</span>
+                                                <span data-bind="visible : Watched() == false">Watch</span>
+                                                </b></a>
+                                            </div>
                                         </th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <tr>
                                         <td colspan="2">
-                                            <p>@Model.Title</p>
+                                            <p>
+                                                @Model.Title</p>
                                         </td>
                                     </tr>
                                     <tr>
@@ -196,6 +203,12 @@
                                         </td>
                                         <td>
                                             @Model.StatusDate
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width: 150px; text-align: right;">
+                                        </td>
+                                        <td style="text-align: left;">
                                         </td>
                                     </tr>
                                 </tbody>

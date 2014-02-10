@@ -4,11 +4,11 @@
         <li class="dropdown">
             @if (User.IsInRole("Admin"))
             {
-                <a href="#" class="dropdown-toggle" data-toggle="dropdown">(admin) myAccount<b class="caret"></b></a>
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">(admin) myAccount&nbsp;<b class="caret"></b></a>
             }
             else
             {
-                <a href="#" class="dropdown-toggle" data-toggle="dropdown">myAccount<b class="caret"></b></a>
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">myAccount&nbsp;<b class="caret"></b></a>
             }
             <ul class="dropdown-menu">
                 <li><a href="@Url.Action("index", new { Controller = "acct" })">Account Home</a></li>
@@ -19,6 +19,6 @@
     }
     else
     { 
-        <li><a href="@Url.Action("index", new { Controller = "acct" })">myAccount</a></li>
+        <li><a href="@Url.Action("index", new { Controller = "acct" })">myAccount&nbsp;</a></li>
     }
 </ul>

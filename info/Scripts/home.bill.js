@@ -95,6 +95,21 @@ $(document).ready(function () {
         $("#frmError").show();
     }
 
+    //KO Model - Watch
+    var viewWatch = function () {
+        var self = this;
+
+        //Basic properties.
+        self.Watched = ko.observable(false);
+        self.Bill = ko.observable('');
+
+        self.Update = function () {
+            if (self.Watched() == false) {
+                self.Watched(true);
+            } else { self.Watched(false); }
+        }
+    }
+
     //KO Model - Person
     var viewPerson = function () {
 
@@ -173,8 +188,9 @@ $(document).ready(function () {
         //OpenStates.org Key
         var OSKey = '0b6a5cec96214c22b41cd8c4ba605d85';
 
-        //Homeosapien.
+        //Homeosapien and watchfulness.
         this.Person = new viewPerson();
+        this.Watch = new viewWatch();
 
         //pending development
         this.NonGovOrg = ko.observable(),
