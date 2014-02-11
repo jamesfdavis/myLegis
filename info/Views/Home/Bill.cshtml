@@ -1,6 +1,6 @@
 ﻿@model info.Models.Legislation
 @{
-    ViewBag.Title = @Model.Name + @" - myLegis";
+    ViewBag.Title = @Model.Name.Replace(" ", "").Trim() + @" - myLegis";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 @section css {
@@ -174,12 +174,10 @@
                                             @Html.Raw(@Model.ShortTitle)
                                             @if (User.Identity.IsAuthenticated)
                                             {
-                                                <div id="divWatch" class="pull-right" data-bind="with: Watch">
-                                                    <a class="btn btn-default btn-xs" data-bind="click : MaintainState">
-                                                    <span data-bind="css: { 'glyphicon-star' : Watched(), 'glyphicon-star-empty' : Watched() == false }"
-                                                        class="glyphicon ">
-                                                    </span><b><span data-bind="visible : Watched">&nbsp;Unwatch</span>
-                                                    <span data-bind="visible : Watched() == false">Watch</span> </b></a>
+                                                <div id="divWatch" class="pull-right hidden" data-bind="with: Watch">
+                                                    <a class="btn btn-default btn-xs" data-bind="click : MaintainState"><span data-bind="css: { 'glyphicon-star' : Watched(), 'glyphicon-star-empty' : Watched() == false }"
+                                                        class="glyphicon "></span><b><span data-bind="visible : Watched">&nbsp;Unwatch</span>
+                                                            <span data-bind="visible : Watched() == false">Watch</span> </b></a>
                                                 </div> 
                                             }
                                         </th>
@@ -227,7 +225,8 @@
                                         </th>
                                     </tr>
                                 </thead>
-                                <tbody data-bind="event: { contextmenu: rightClick }">
+                                @*<tbody data-bind="event: { contextmenu: rightClick }">*@ 
+                                <tbody>
                                     @foreach (var a in Model.Activity.Where(n => n.Date == null))
                                     {
                                         <tr>
@@ -243,7 +242,8 @@
                                                     <p style="float: left; padding: 5px 0 5px 0; width: 100%;">@act.Description
                                                         <a href="https://github.com/ragingsmurf/myLegisData/commit/@act.Sha" 
                                                             class="btn btn-default
-                                                            pull-right" style="margin-right : 5px;" role="button">@act.Sha <span class="glyphicon glyphicon-arrow-right">
+                                                            pull-right" style="margin-right : 5px;" role="button"><span class="glyphicon glyphicon-eye-open">
+                                                            </span>&nbsp;&nbsp;Revision on GitHub&nbsp;<span class="glyphicon glyphicon-arrow-right">
                                                             </span></a>
                                                     </p>                                        
                                                     }
@@ -270,7 +270,8 @@
                                                     {
                                                     <p style="float: left; padding: 5px 0 5px 0; width: 100%;">@act.Description
                                                         <a href="https://github.com/ragingsmurf/myLegisData/commit/@act.Sha" 
-                                                        class="btn btn-default pull-right" style="margin-right : 5px;" role="button">@act.Sha
+                                                        class="btn btn-default pull-right" style="margin-right : 5px;" role="button"><span
+                                                            class="glyphicon glyphicon-eye-open"></span>&nbsp;&nbsp;Revision on GitHub&nbsp;
                                                             <span class="glyphicon glyphicon-arrow-right" /></a>
                                                     </p>                                        
                                                     }

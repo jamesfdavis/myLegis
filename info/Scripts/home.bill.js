@@ -140,6 +140,7 @@ $(document).ready(function () {
                     serverErrors(data);
                 }).always(function () {
                     //Complete
+                    $('#divWatch').removeClass('hidden');
                 });
             }
         }

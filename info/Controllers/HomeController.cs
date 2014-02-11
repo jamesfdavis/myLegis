@@ -42,7 +42,7 @@ namespace info.Controllers
         }
 
         [HttpGet]
-        [Authorize(Roles="Admin")]
+        //[Authorize(Roles="Admin")]
         public ViewResult House()
         {
 
