@@ -10,6 +10,7 @@ using DotNetOpenAuth.OpenId;
 using DotNetOpenAuth.Messaging;
 using DotNetOpenAuth.OpenId.Extensions.AttributeExchange;
 using info.Models;
+using info.ActionFilters;
 using System.Data;
 namespace info.Controllers
 {
@@ -42,6 +43,7 @@ namespace info.Controllers
 
         [HttpGet]
         [Authorize]
+        [CacheBuster]
         public ViewResult Index()
         {
             return View();

@@ -12,6 +12,7 @@ using System.Configuration;
 using myLegis.Spider.Models;
 using myLegis.Spider;
 using info.Models;
+using System.Data.SqlClient;
 
 namespace info.Controllers
 {
@@ -99,6 +100,29 @@ namespace info.Controllers
         public ViewResult Error()
         {
             return View();
+        }
+
+        [HttpGet]
+        public ViewResult DBTest()
+        {
+
+            string rslt = "Start";
+            try
+            {
+                SqlConnection conn = new SqlConnection(@"data source=.\SQLEXPRESS;attachdbfilename=|DataDirectory|\www.mdf;integrated security=True;user instance=True;multipleactiveresultsets=True;App=EntityFramework");
+                conn.Open();
+                rslt = "Opened";
+                conn.Close();
+                rslt = "Closed";
+            }
+            catch (Exception ex)
+            {
+                rslt = ex.Message;
+            }
+            ViewData["Result"] = rslt;
+
+            return View();
+
         }
 
     }
