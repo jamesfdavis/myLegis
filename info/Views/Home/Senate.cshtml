@@ -1,6 +1,7 @@
-﻿@model List<info.Models.SessionList>
+﻿@using System.Configuration;
+@model List<info.Models.SessionList>
 @{
-    ViewBag.Title = "Senate - myLegis";
+    ViewBag.Title = "Alaska Senate - myLegis";
     Layout = "~/Views/Shared/_Layout.cshtml";
     
 }
@@ -31,18 +32,21 @@
         <li class="active">Senate Legislation</li>
     </ol>
     <ul class="nav nav-tabs">
-        <li class="active"><a href="#sb" data-toggle="tab">Bills</a></li>
-        <li><a href="#sr" data-toggle="tab"><span class="hidden-xs">Resolutions</span><span
-            class="visible-xs">Res.</span></a></li>
-        <li><a href="#sjr" data-toggle="tab"><span class="hidden-xs">Joint Resolutions</span><span
-            class="visible-xs">Joint Res.</span></a></li>
-        <li><a href="#scr" data-toggle="tab"><span class="hidden-xs">Concurrent Resolutions</span><span
-            class="visible-xs">Con. Res.</span> </a></li>
+        <li class="active"><a href="#sb" data-toggle="tab"><span class="hidden-xs">Bills</span><span
+            class="visible-xs">B</span></a></li>
+        <li class=""><a href="#sr" data-toggle="tab"><span class="hidden-xs">Resolutions</span><span
+            class="visible-xs">R</span></a></li>
+        <li class=""><a href="#sjr" data-toggle="tab"><span class="hidden-xs">Joint Resolutions</span><span
+            class="visible-xs">JR</span></a></li>
+        <li class=""><a href="#scr" data-toggle="tab"><span class="hidden-xs">Concurrent Resolutions</span><span
+            class="visible-xs">CR</span> </a></li>
     </ul>
     <div class="tab-content">
         <div class="tab-pane fade in active" id="sb">
             <div class="row">
                 <div class="col-md-8" style="margin-top: 5px;">
+                    <h5 style="margin-left: 5px;">@ConfigurationManager.AppSettings["appSessionName"] Senate
+                        Bills</h5>
                     <ul class="list-group">
                         @Html.Partial("_session-bill-list", Model.Where(n => n.Name == @"SB").ToList())
                     </ul>
@@ -55,6 +59,8 @@
         <div class="tab-pane fade" id="sr">
             <div class="row">
                 <div class="col-md-8" style="margin-top: 5px;">
+                    <h5 style="margin-left: 5px;">@ConfigurationManager.AppSettings["appSessionName"] Senate
+                        Resolutions</h5>
                     <ul class="list-group">
                         @Html.Partial("_session-bill-list", Model.Where(n => n.Name == @"SR").ToList())
                     </ul>
@@ -67,6 +73,8 @@
         <div class="tab-pane fade" id="sjr">
             <div class="row">
                 <div class="col-md-8" style="margin-top: 5px;">
+                    <h5 style="margin-left: 5px;">@ConfigurationManager.AppSettings["appSessionName"] Senate
+                        Joint Resolutions</h5>
                     <ul class="list-group">
                         @Html.Partial("_session-bill-list", Model.Where(n => n.Name == @"SJR").ToList())
                     </ul>
@@ -79,6 +87,8 @@
         <div class="tab-pane fade" id="scr">
             <div class="row">
                 <div class="col-md-8" style="margin-top: 5px;">
+                    <h5 style="margin-left: 5px;">@ConfigurationManager.AppSettings["appSessionName"] Senate
+                        Concurrent Resolutions</h5>
                     <ul class="list-group">
                         @Html.Partial("_session-bill-list", Model.Where(n => n.Name == @"SCR").ToList())
                     </ul>
