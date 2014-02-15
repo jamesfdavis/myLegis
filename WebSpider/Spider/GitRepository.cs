@@ -190,7 +190,7 @@ namespace myLegis.Spider
                 FileInfo s = new FileInfo(objectPath.ToString());
 
                 var t = s.LastWriteTime;
-                var ts = (DateTime.Now - s.LastWriteTime).Minutes;
+                var ts = (DateTime.Now - s.LastWriteTime).TotalMinutes;
 
                 if (ts > 90)
                 {

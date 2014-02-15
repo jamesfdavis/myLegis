@@ -149,7 +149,7 @@ namespace info.Models
         /// <param name="fileMap"></param>
         /// <param name="listName"></param>
         /// <returns></returns>
-        public static SessionList CollectBills(string fileMap, string listName)
+        public static SessionList CollectBills(string fileMap, string listName, string[] filter = null)
         {
 
             //Locate the bill
@@ -163,7 +163,22 @@ namespace info.Models
             SessionList sl = new SessionList { Name = listName };
             sl.Bills = new List<ItemOverview>();
 
-            foreach (var d in di.GetDirectories(fileMap, SearchOption.TopDirectoryOnly))
+            List<DirectoryInfo> dirIdx = null;
+            dirIdx = new List<DirectoryInfo>();
+
+            //Filter Bill List?
+            if (filter != null)
+            {
+                dirIdx.AddRange((from d in di.GetDirectories(fileMap, SearchOption.TopDirectoryOnly)
+                                 join f in filter on d.Name.ToString() equals f
+                                 select d).ToList());
+            }
+            else
+            {
+                dirIdx.AddRange(di.GetDirectories(fileMap, SearchOption.TopDirectoryOnly));
+            }
+
+            foreach (var d in dirIdx)
             {
 
                 var s = d;
@@ -182,7 +197,11 @@ namespace info.Models
                 {
                     fs = new FileStream(objectPath.ToString(), FileMode.Open, FileAccess.Read);
                     gb = (GitBill)serializer.Deserialize(fs);
-                    sl.Bills.Add(new ItemOverview { Location = d.Name, Name = gb.Name, Title = gb.ShortTitle });
+                    //Fetch last activity
+                    DateTime? lstAct = (from a in gb.Activity.OrderByDescending(n => n.Date)
+                                        select a.Date).FirstOrDefault();
+                    //Add Bill
+                    sl.Bills.Add(new ItemOverview { Location = d.Name, Name = gb.Name, Title = gb.ShortTitle, LastActivity = lstAct });
                     fs.Close();
                     fs.Dispose();
                     fs = null;
@@ -197,6 +216,7 @@ namespace info.Models
             return sl;
 
         }
+
 
     }
 }

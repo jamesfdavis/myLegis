@@ -5,6 +5,7 @@ using System.Web;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
+using info.Models;
 
 namespace info.Controllers
 {
@@ -56,15 +57,40 @@ namespace info.Controllers
                     db.Watches.AddObject(new Models.Watch { ClaimedIdentifier = User.Identity.Name, Name = W.Name });
                     db.SaveChanges();
                     return true;
-                }  else {
+                }
+                else
+                {
                     db.Watches.DeleteObject(wtc);
                     db.SaveChanges();
                     return false;
                 }
             }
-            else {
+            else
+            {
                 throw new HttpResponseException(Request.CreateResponse(HttpStatusCode.Unauthorized));
             }
+        }
+
+        // lst.Add(BillRepo.CollectBills("SB*", "SB", new string[] { "SB1", "SB2" }));
+        // GET api/Phrase
+        [HttpGet]
+        public IEnumerable<ItemOverview> GetWatchList()
+        {
+
+            if (User.Identity.IsAuthenticated)
+            {
+                string[] filter = (from l in db.Watches.Where(n => n.ClaimedIdentifier == User.Identity.Name)
+                                   select l.Name).ToArray<string>();
+
+                SessionList sl = BillRepo.CollectBills("*", "Watches", filter);
+
+                return sl.Bills;
+            }
+            else
+            {
+                throw new HttpResponseException(Request.CreateResponse(HttpStatusCode.Unauthorized));
+            }
+
         }
 
         protected override void Dispose(bool disposing)

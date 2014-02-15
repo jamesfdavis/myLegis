@@ -19,6 +19,7 @@ namespace info.Models
         public string Name { get; set; }
         public string Title { get; set; }
         public string Location { get; set; }
+        public Nullable<DateTime> LastActivity { get; set; }
     }
 
     /// <summary>

@@ -24,7 +24,8 @@
                 <li class="dropdown active">
                     @if (User.IsInRole("Admin"))
                     {
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">(admin) myAccount&nbsp;<b class="caret"></b></a>
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">(admin) myAccount&nbsp;<b
+                            class="caret"></b></a>
                     }
                     else
                     {
@@ -44,23 +45,27 @@
         <li><a href="@Url.Action("Index", new { Controller = "Home" })">Home</a> </li>
         <li class="active">myAccount</li>
     </ol>
-    <div class="row marketing">
-        <div class="col-lg-6">
-            <h4>
-                Welcome,</h4>
-            <p>
-                From here, you can personalize stuff.</p>
-            <h4>
-                Track Bills</h4>
-            <p>
-                Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Cras mattis consectetur
-                purus sit amet fermentum.</p>
+    <div class="row">
+        <div class="col-md-8" style="margin-top: 5px;">
+            <h5 style="margin-left: 5px;">
+                Watch List</h5>
+            <div class="alert alert-warning alert-dismissable" style="display : none;" data-bind="visible : (Loaded && Empty)">
+               <span class="glyphicon glyphicon-info-sign"></span>
+                &nbsp;Your Watchlist is empty.
+            </div>
+            <ul class="list-group" data-bind="foreach: List, visible : List().length > 0">
+                <a data-bind="attr { href: Location }" class="list-group-item">
+                    <h5 class="list-group-item-heading" data-bind="text : Title">
+                    </h5>
+                    <span class="badge badge-primary" data-bind="text : Name"></span>
+                    <p class="list-group-item-text">
+                        &nbsp;
+                    </p>
+                </a>
+            </ul>
         </div>
-        <div class="col-lg-6">
-            <h4>
-                Coming Soon!</h4>
-            <p>
-                More Stuff..</p>
+        <div class="col-md-4" style="margin-top: 15px;">
+            &nbsp;
         </div>
     </div>
     <div class="footer">
@@ -68,3 +73,11 @@
     </div>
 </div>
 <!-- /container -->
+@section scripts {
+    @Scripts.Render("~/bundles/acct")
+    @*    <script type="text/javascript">
+              $(document).ready(function () {
+                  //$('#modCopyTool').modal();
+              });
+    </script>*@
+}

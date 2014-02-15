@@ -176,8 +176,9 @@
                                             {
                                                 <div id="divWatch" class="pull-right hidden" data-bind="with: Watch">
                                                     <a class="btn btn-default btn-xs" data-bind="click : MaintainState"><span data-bind="css: { 'glyphicon-star' : Watched(), 'glyphicon-star-empty' : Watched() == false }"
-                                                        class="glyphicon "></span><b><span data-bind="visible : Watched"><span class="hidden-xs">&nbsp;Unwatch</span></span>
-                                                            <span data-bind="visible : Watched() == false"><span class="hidden-xs">&nbsp;Watch</span></span> </b></a>
+                                                        class="glyphicon "></span><b><span data-bind="visible : Watched"><span class="hidden-xs">
+                                                            &nbsp;Unwatch</span></span> <span data-bind="visible : Watched() == false"><span
+                                                                class="hidden-xs">&nbsp;Watch</span></span> </b></a>
                                                 </div> 
                                             }
                                         </th>
@@ -188,6 +189,14 @@
                                         <td colspan="2">
                                             <p>
                                                 @Model.Title</p>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width: 150px; text-align: right;">
+                                            Sponsors
+                                        </td>
+                                        <td>
+                                            @Model.Sponsors
                                         </td>
                                     </tr>
                                     <tr>
@@ -225,7 +234,7 @@
                                         </th>
                                     </tr>
                                 </thead>
-                                @*<tbody data-bind="event: { contextmenu: rightClick }">*@ 
+                                @*<tbody data-bind="event: { contextmenu: rightClick }">*@
                                 <tbody>
                                     @foreach (var a in Model.Activity.Where(n => n.Date == null))
                                     {
@@ -242,9 +251,9 @@
                                                     <p style="float: left; padding: 5px 0 5px 0; width: 100%;">@act.Description
                                                         <a href="https://github.com/ragingsmurf/myLegisData/commit/@act.Sha" 
                                                             class="btn btn-default
-                                                            pull-right" style="margin-right : 5px;" role="button"><span class="glyphicon glyphicon-eye-open">
-                                                            </span>&nbsp;&nbsp;Revision on GitHub&nbsp;<span class="glyphicon glyphicon-arrow-right">
-                                                            </span></a>
+                                                            pull-right" style="margin-right : 5px;" role="button"><span class="hidden-xs">Revision
+                                                                on </span>GitHub &nbsp;<span class="glyphicon glyphicon-arrow-right"> </span>
+                                                        </a>
                                                     </p>                                        
                                                     }
                                                     else
@@ -271,8 +280,8 @@
                                                     <p style="float: left; padding: 5px 0 5px 0; width: 100%;">@act.Description
                                                         <a href="https://github.com/ragingsmurf/myLegisData/commit/@act.Sha" 
                                                         class="btn btn-default pull-right" style="margin-right : 5px;" role="button"><span
-                                                            class="glyphicon glyphicon-eye-open"></span>&nbsp;&nbsp;Revision on GitHub&nbsp;
-                                                            <span class="glyphicon glyphicon-arrow-right" /></a>
+                                                            class="hidden-xs">Revision on </span>GitHub &nbsp;<span class="glyphicon glyphicon-arrow-right">
+                                                            </span></a>
                                                     </p>                                        
                                                     }
                                                     else

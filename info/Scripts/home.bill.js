@@ -368,17 +368,6 @@ $(document).ready(function () {
 
             }
 
-            // Function that creates our records from the DOM when the page is loaded
-            function ulReader(index, li, record) {
-                var $li = $(li),
-                $caption = $li.find('.caption');
-                record.thumbnail = $li.find('.thumbnail-image').html();
-                record.caption = $caption.html();
-                record.label = $caption.find('h3').text();
-                record.description = $caption.find('p').text();
-                record.color = $li.data('color');
-            }
-
             var $dynatable = $('#my-legislator-results').dynatable({
                 dataset: {
                     perPageDefault: 1,

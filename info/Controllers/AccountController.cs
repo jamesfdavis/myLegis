@@ -149,7 +149,7 @@ namespace info.Controllers
                 }
                 //This should not happen if all controllers have [Authorise] used on them
                 else
-                    throw new InvalidOperationException("There is no ReturnUrl");
+                    return RedirectToAction("Index", new { Controller = "acct" });
             }
             return View("LogOn");
         }

@@ -15,7 +15,7 @@ namespace info
                                     "~/Scripts/jquery.validate.js",
                                     "~/Scripts/jquery.metadata.js",
                                     "~/Scripts/knockout-{version}.js",
-                                    "~/Scripts/knockout.mapping{version}.js",
+                                    "~/Scripts/knockout.mapping.js",
                                     "~/Scripts/bootstrap.js"));
 
             //Home/Bill - Knockout
@@ -23,6 +23,11 @@ namespace info
                                     "~/Scripts/regex.js",
                                     "~/Scripts/jquery.dynatable.js",
                                     "~/Scripts/home.bill.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/acct").Include(
+                        "~/Scripts/regex.js",
+                        "~/Scripts/jquery.dynatable.js",
+                        "~/Scripts/home.acct.js"));
 
             // Use the development version of Modernizr to develop with and learn from. Then, when you're
             // ready for production, use the build tool at http://modernizr.com to pick only the tests you need.
