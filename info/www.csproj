@@ -351,6 +351,8 @@
     <Content Include="Views\Home\500.cshtml" />
     <Content Include="Views\Home\Error.cshtml" />
     <Content Include="Views\Home\DBTest.cshtml" />
+    <Content Include="Views\Account\Users.cshtml" />
+    <Content Include="Views\Shared\_navbar-myaccount-account.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\WebSpider\spider.csproj">

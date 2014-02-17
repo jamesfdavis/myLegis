@@ -12,6 +12,7 @@ using DotNetOpenAuth.OpenId.Extensions.AttributeExchange;
 using info.Models;
 using info.ActionFilters;
 using System.Data;
+using System.Configuration;
 namespace info.Controllers
 {
     /// <summary>
@@ -46,7 +47,23 @@ namespace info.Controllers
         [CacheBuster]
         public ViewResult Index()
         {
-            return View();
+            //RoundTrip to the DB
+            User usr = (from u in db.Users.Where(n => n.ClaimedIdentifier == User.Identity.Name)
+                        select u).FirstOrDefault();
+
+            return View(usr);
+        }
+
+        [HttpGet]
+        [Authorize(Roles="Admin")]
+        [CacheBuster]
+        public ViewResult Users() {
+
+            //RoundTrip to the DB
+            List<User> usrs = (from u in db.Users
+                        select u).ToList();
+
+            return View(usrs);
         }
 
         /// <summary>
@@ -116,7 +133,7 @@ namespace info.Controllers
                     usr.Name = userData.FullName;
                     db.ObjectStateManager.ChangeObjectState(usr, EntityState.Modified);
                     //Setup role
-                    if (usr.IsAdmin)
+                    if (ConfigurationManager.AppSettings["appAdmin"] == cid)
                         userData.IsAdmin = true;
                     db.SaveChanges();
                 }
@@ -127,7 +144,7 @@ namespace info.Controllers
                     {
                         ClaimedIdentifier = response.ClaimedIdentifier,
                         Email = userData.Email,
-                        IsAdmin = false,
+                        IsAdmin = ConfigurationManager.AppSettings["appAdmin"] == cid ? true : false,
                         Name = userData.FullName
                     });
                     db.SaveChanges();

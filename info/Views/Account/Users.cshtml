@@ -1,0 +1,104 @@
+﻿@using info.Models;
+@model List<User>
+@{
+    ViewBag.Title = "myAccount - myLegis";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section head {
+    <meta name="ROBOTS" content="NOINDEX, NOFOLLOW" />
+}
+@section css {
+    @Styles.Render("~/Content/narrowjumbo")
+    <style>
+        .label-copy
+        {
+            background-color: #F7F7F7;
+            color: #8F8F8F;
+        }
+    </style>
+}
+<div class="container">
+    <!-- Static navbar -->
+    <div class="navbar navbar-default" role="navigation">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="sr-only">Toggle navigation</span> <span class="icon-bar"></span><span
+                    class="icon-bar"></span><span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="@Url.Action("Index", new { Controller = "Home" })">myLegis</a>
+        </div>
+        <div class="navbar-collapse collapse">
+            @Html.Partial("_navbar-primary-navigation")
+            <ul class="nav navbar-nav navbar-right">
+                <li class="dropdown active">
+                    @Html.Partial("_navbar-myaccount-account")
+                </li>
+            </ul>
+        </div>
+        <!--/.nav-collapse -->
+    </div>
+    <ol class="breadcrumb">
+        <li><a href="@Url.Action("Index", new { Controller = "Home" })">Home</a> </li>
+        <li><a href="@Url.Action("Index", new { Controller = "Account" })">myAccount</a> </li>
+        <li class="active">Admin - User List</li>
+    </ol>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="panel panel-default">
+                <!-- Default panel contents -->
+                <div class="panel-heading">
+                    User List</div>
+                <!-- Table -->
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>
+                                #
+                            </th>
+                            <th>
+                                Name
+                            </th>
+                            <th>
+                                Email
+                            </th>
+                            <th>
+                                UID
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (User u in Model.ToList())
+                        {
+                            <tr>
+                                <td>
+                                    @u.ID
+                                </td>
+                                <td style="width : 90px;">
+                                    @u.Name
+                                </td>
+                                <td>
+                                    @u.Email
+                                </td>
+                                <td>
+                                    @u.ClaimedIdentifier
+                                </td>
+                            </tr> 
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div class="footer">
+        @Html.Partial("_footer")
+    </div>
+</div>
+<!-- /container -->
+@section scripts {
+    @Scripts.Render("~/bundles/acct")
+    @*    <script type="text/javascript">
+              $(document).ready(function () {
+                  //$('#modCopyTool').modal();
+              });
+    </script>*@
+}

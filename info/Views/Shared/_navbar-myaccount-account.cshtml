@@ -1,0 +1,14 @@
+﻿@if (User.IsInRole("Admin"))
+{
+    <a href="#" class="dropdown-toggle" data-toggle="dropdown">(admin) myAccount&nbsp;<b
+        class="caret"></b></a>
+}
+else
+{
+    <a href="#" class="dropdown-toggle" data-toggle="dropdown">myAccount&nbsp;<b class="caret"></b></a>
+}
+<ul class="dropdown-menu">
+    <li><a href="@Url.Action("Index", new { Controller = "acct" })">Account Home</a></li>
+    <li class="divider"></li>
+    <li><a href="@Url.Action("LogOff", new { Controller = "acct" })">Log Out</a></li>
+</ul>

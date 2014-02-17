@@ -1,4 +1,5 @@
-﻿@{
+﻿@model info.Models.User
+@{
     ViewBag.Title = "myAccount - myLegis";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
@@ -29,20 +30,7 @@
             @Html.Partial("_navbar-primary-navigation")
             <ul class="nav navbar-nav navbar-right">
                 <li class="dropdown active">
-                    @if (User.IsInRole("Admin"))
-                    {
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">(admin) myAccount&nbsp;<b
-                            class="caret"></b></a>
-                    }
-                    else
-                    {
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">myAccount&nbsp;<b class="caret"></b></a>
-                    }
-                    <ul class="dropdown-menu">
-                        <li><a href="@Url.Action("Index", new { Controller = "acct" })">Account Home</a></li>
-                        <li class="divider"></li>
-                        <li><a href="@Url.Action("LogOff", new { Controller = "acct" })">Log Out</a></li>
-                    </ul>
+                    @Html.Partial("_navbar-myaccount-account")
                 </li>
             </ul>
         </div>
@@ -53,6 +41,8 @@
         <li class="active">myAccount</li>
     </ol>
     <div class="row">
+        <span style="display: none;">
+            @User.Identity.Name</span>
         <div class="col-md-8" style="margin-top: 5px; display: none;" data-bind="visible : (Fetching())">
             <ul class="list-group">
                 <span class="list-group-item">
@@ -79,7 +69,8 @@
                         <span class="label label-default">Withdrawn</span>
                     </p>
                     <p class="list-group-item-text" data-bind="visible : State == 'Committee'">
-                        <span class="label label-copy" data-bind="text : Status + ' ( ' + moment(LastActivity).format('MMM, DD YYYY') + ' )'"></span>
+                        <span class="label label-copy" data-bind="text : Status + ' ( ' + moment(LastActivity).format('MMM, DD YYYY') + ' )'">
+                        </span>
                     </p>
                 </a>
             </ul>
@@ -100,13 +91,19 @@
                 </a>
             </ul>
         </div>
-        <!-- Watch Tutorial -->
-        <div class="col-md-4" style="display: none;" data-bind="visible : (List().length == 0 && Loaded())">
+        <!-- User Details -->
+        <div class="col-md-4" style="display: none;" data-bind="visible : (Loaded() == true)">
             <h5>
-                Watching a Bill</h5>
-            <img src="../Content/img/watch-button.png" alt="Watch Button" class="img-thumbnail" />
-            <p>
-                Watch a bill by pressing the Watch button at the top of the document.</p>
+                Account</h5>
+            <ul class="list-group">
+                <li class="list-group-item">@Model.Name</li>
+                <li class="list-group-item">@Model.Email</li>
+                @if (User.IsInRole("Admin"))
+                {
+                    <li class="list-group-item"><a href="@Url.Action("users", new { Controller = "Account" })">
+                        User List</a> </li>
+                }
+            </ul>
         </div>
     </div>
     <div class="footer">
