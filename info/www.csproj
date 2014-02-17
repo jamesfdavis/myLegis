@@ -353,6 +353,7 @@
     <Content Include="Views\Home\DBTest.cshtml" />
     <Content Include="Views\Account\Users.cshtml" />
     <Content Include="Views\Shared\_navbar-myaccount-account.cshtml" />
+    <Content Include="Views\Home\Search.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\WebSpider\spider.csproj">

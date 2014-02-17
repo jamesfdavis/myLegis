@@ -28,6 +28,12 @@ namespace info.Controllers
         }
 
         [HttpGet]
+        public ViewResult Search()
+        {
+            return View();
+        }
+
+        [HttpGet]
         public ViewResult Senate()
         {
 

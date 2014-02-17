@@ -1,7 +1,7 @@
 ﻿@using System.Configuration;
 @model List<info.Models.SessionList>
 @{
-    ViewBag.Title = "Alaska House - myLegis";
+    ViewBag.Title = "Alaska House of Representatives - myLegis";
     Layout = "~/Views/Shared/_Layout.cshtml";
     
 }
@@ -14,6 +14,9 @@
             color: #8F8F8F;
         }
     </style>
+}
+@section head {
+    <meta name="description" content="Alaska House legislation list." />
 }
 <div class="container">
     <!-- Static navbar -->

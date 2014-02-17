@@ -36,6 +36,11 @@ namespace info
                 defaults: new { controller = "Home", action = "Senate" });
 
             routes.MapRoute(
+                name: "Search",
+                url: "search",
+                defaults: new { controller = "Home", action = "Search" });
+
+            routes.MapRoute(
                 name: "myAccount",
                 url: "acct/{action}",
                 defaults: new { controller = "Account", action = "Index" });

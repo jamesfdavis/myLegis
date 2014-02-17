@@ -1,0 +1,67 @@
+﻿@using System.Configuration;
+@{
+    ViewBag.Title = "Search - myLegis";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    
+}
+@section css {
+    @Styles.Render("~/Content/narrowjumbo")
+}
+@section head {
+    <meta name="description" content="Google Custom Search Engine for the myLegis website." />
+}
+<div class="container">
+    <!-- Static navbar -->
+    <div class="navbar navbar-default" role="navigation">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="sr-only">Toggle navigation</span> <span class="icon-bar"></span><span
+                    class="icon-bar"></span><span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#">myLegis</a>
+        </div>
+        <div class="navbar-collapse collapse">
+            @Html.Partial("_navbar-primary-navigation")
+            @Html.Partial("_navbar-myaccount")
+        </div>
+        <!--/.nav-collapse -->
+    </div>
+    <ol class="breadcrumb">
+        <li><a href="@Url.Action("Index")">Home</a> </li>
+        <li class="active">Search</li>
+    </ol>
+    <div class="row">
+        <div class="col-md-8" style="padding-top: 15px;">
+            <gcse:searchbox></gcse:searchbox>
+        </div>
+        <div class="col-md-4 hidden-xs">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    Custom Site Search</div>
+                <div class="panel-body" style="font-family: Courier;">
+                    www.mylegis.com
+                </div>
+            </div>
+        </div>
+        <div class="col-md-12">
+            <!-- Results -->
+            <gcse:searchresults></gcse:searchresults>
+        </div>
+    </div>
+    <div class="footer">
+        @Html.Partial("_footer")
+    </div>
+</div>
+<!-- /container -->
+<script type="text/javascript">
+    (function () {
+        var cx = '009413736417583589007:pwo_3gfbsh4';
+        var gcse = document.createElement('script');
+        gcse.type = 'text/javascript';
+        gcse.async = true;
+        gcse.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') +
+        '//www.google.com/cse/cse.js?cx=' + cx;
+        var s = document.getElementsByTagName('script')[0];
+        s.parentNode.insertBefore(gcse, s);
+    })();
+</script>

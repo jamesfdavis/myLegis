@@ -1,6 +1,6 @@
 ﻿@model info.Models.Legislation
 @{
-    ViewBag.Title = @Model.Name.Replace(" ", "").Trim() + @" - myLegis";
+    ViewBag.Title = @Model.Name.Replace(" ", "").Trim() + @" (" + @Model.ShortTitle + @") myLegis";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 @section css {
@@ -16,6 +16,10 @@
             color: #8F8F8F;
         }
     </style>
+}
+
+@section head {
+    <meta name="description" content="@Model.Title" />
 }
 <!-- modal -->
 <div class="modal fade" id="modCopyTool" tabindex="-1" role="dialog" aria-labelledby="modCopyToolLabel"
