@@ -16,7 +16,8 @@ namespace info
                                     "~/Scripts/jquery.metadata.js",
                                     "~/Scripts/knockout-{version}.js",
                                     "~/Scripts/knockout.mapping.js",
-                                    "~/Scripts/bootstrap.js"));
+                                    "~/Scripts/bootstrap.js",
+                                    "~/Scripts/moment.js"));
 
             //Home/Bill - Knockout
             bundles.Add(new ScriptBundle("~/bundles/bill").Include(

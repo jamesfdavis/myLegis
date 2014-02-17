@@ -207,7 +207,8 @@ namespace info.Models
                         Name = gb.Name,
                         Title = gb.ShortTitle,
                         LastActivity = lstAct,
-                        Status = gb.CurrentStatus
+                        Status = gb.CurrentStatus,
+                        State = gb.CurrentStatus
                     });
                     fs.Close();
                     fs.Dispose();

@@ -18,8 +18,6 @@ $(document).ready(function () {
             var url = '/API/Watch/';
             self.Fetching(true);
             $.get(url, null, function (data) {
-          
-                console.log(data);
                 //Each item in the array
                 for (var i = 0; i < data.length; i++) {
                     var row = data[i];

@@ -9,19 +9,18 @@
             @Html.Raw(b.Title)</h5>
         <span class="badge badge-primary">@b.Name</span>
         <p class="list-group-item-text">
-            &nbsp;
-            @if (b.Status.ToString().ToLower().Contains("chapter"))
+            @if (b.State == "Passed")
             {                
                 <span class="label label-success">Passed</span>
-                <span style="font-size: 11px;">@b.Status</span>
             }
-            else if (b.Status.ToString().ToLower().Contains("withdrawn"))
+            else if (b.State == "withdrawn")
             {
                 <span class="label label-default">Withdrawn</span>
             }
-            else if (b.LastActivity.HasValue)
+            else if (b.State == "Committee")
             {
-                <span style="font-size: 11px;">@Html.Raw(b.Status) activity on @b.LastActivity.Value.ToLongDateString()</span>
+                <span class="label label-copy">
+                @Html.Raw(b.Status) ( @b.LastActivity.Value.ToString("MMM, dd yyyy") )</span>
             }
         </p>
     </a>

@@ -10,6 +10,11 @@
         {
             max-width: 980px;
         }
+        .label-copy
+        {
+            background-color: #F7F7F7;
+            color: #8F8F8F;
+        }
     </style>
 }
 <!-- modal -->
@@ -192,23 +197,35 @@
                                         </td>
                                     </tr>
                                     <tr>
-                                        <td style="width: 150px; text-align: right;">
-                                            Sponsors
+                                        <td style="width: 120px; text-align: right;">
+                                            Sponsorship
                                         </td>
                                         <td>
                                             @Model.Sponsors
                                         </td>
                                     </tr>
                                     <tr>
-                                        <td style="width: 150px; text-align: right;">
+                                        <td style="width: 120px; text-align: right;">
                                             Current Status
                                         </td>
                                         <td>
-                                            @Html.Raw(Model.CurrentStatus)
+                                            @if (Model.State == "Passed")
+                                            {                
+                                                <span class="label label-success">Passed</span>
+                                            }
+                                            else if (Model.State == "withdrawn")
+                                            {
+                                                <span class="label label-default">Withdrawn</span>
+                                            }
+                                            else if (Model.State == "Committee")
+                                            {
+                                                <span class="label label-default">
+                                                    @Html.Raw(Model.CurrentStatus)</span>
+                                            }
                                         </td>
                                     </tr>
                                     <tr>
-                                        <td style="width: 150px; text-align: right;">
+                                        <td style="width: 120px; text-align: right;">
                                             Status Date
                                         </td>
                                         <td>
@@ -216,7 +233,7 @@
                                         </td>
                                     </tr>
                                     <tr>
-                                        <td style="width: 150px; text-align: right;">
+                                        <td style="width: 120px; text-align: right;">
                                         </td>
                                         <td style="text-align: left;">
                                         </td>

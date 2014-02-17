@@ -7,6 +7,13 @@
 }
 @section css {
     @Styles.Render("~/Content/narrowjumbo")
+    <style>
+        .label-copy
+        {
+            background-color: #F7F7F7;
+            color: #8F8F8F;
+        }
+    </style>
 }
 <div class="container">
     <!-- Static navbar -->
@@ -50,7 +57,7 @@
             <ul class="list-group">
                 <span class="list-group-item">
                     <p class="list-group-item-text">
-                        &nbsp;<img src="../Content/Img/ajax-loader.gif" />
+                        &nbsp;<img src="../Content/Img/ajax-loader.gif" alt="Loading Gif" />
                         &nbsp;&nbsp;Loading!
                     </p>
                 </span>
@@ -65,8 +72,14 @@
                     <h5 class="list-group-item-heading" data-bind="text : Title">
                     </h5>
                     <span class="badge badge-primary" data-bind="text : Name"></span>
-                    <p class="list-group-item-text">
-                        &nbsp;<span style="font-size: 11px;" data-bind="text: Status"></span>
+                    <p class="list-group-item-text" data-bind="visible : State == 'Passed'">
+                        <span class="label label-success">Passed</span>
+                    </p>
+                    <p class="list-group-item-text" data-bind="visible : State == 'Withdrawn'">
+                        <span class="label label-default">Withdrawn</span>
+                    </p>
+                    <p class="list-group-item-text" data-bind="visible : State == 'Committee'">
+                        <span class="label label-copy" data-bind="text : Status + ' ( ' + moment(LastActivity).format('MMM, DD YYYY') + ' )'"></span>
                     </p>
                 </a>
             </ul>
