@@ -1,7 +1,5 @@
 ﻿@using info.Models;
-
 @model List<info.Models.SessionList>
-
 @foreach (SessionList l in Model.ToList())
 {
     foreach (ItemOverview b in l.Bills.OrderBy(n => n.Name))
@@ -12,6 +10,19 @@
         <span class="badge badge-primary">@b.Name</span>
         <p class="list-group-item-text">
             &nbsp;
+            @if (b.Status.ToString().ToLower().Contains("chapter"))
+            {                
+                <span class="label label-success">Passed</span>
+                <span style="font-size: 11px;">@b.Status</span>
+            }
+            else if (b.Status.ToString().ToLower().Contains("withdrawn"))
+            {
+                <span class="label label-default">Withdrawn</span>
+            }
+            else if (b.LastActivity.HasValue)
+            {
+                <span style="font-size: 11px;">@Html.Raw(b.Status) activity on @b.LastActivity.Value.ToLongDateString()</span>
+            }
         </p>
     </a>
     }

@@ -11,12 +11,14 @@ $(document).ready(function () {
         self.List = ko.observableArray([]);
         self.Empty = ko.observable(false);
         self.Loaded = ko.observable(false);
+        self.Fetching = ko.observable(false);
 
         //Get Watch list
         self.GetList = function () {
             var url = '/API/Watch/';
+            self.Fetching(true);
             $.get(url, null, function (data) {
-
+          
                 console.log(data);
                 //Each item in the array
                 for (var i = 0; i < data.length; i++) {
@@ -31,6 +33,7 @@ $(document).ready(function () {
                     self.Empty(true);
 
                 self.Loaded(true);
+                self.Fetching(false);
 
             }, 'json');
         };

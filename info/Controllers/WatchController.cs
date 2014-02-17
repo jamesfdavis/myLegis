@@ -81,7 +81,7 @@ namespace info.Controllers
             {
                 string[] filter = (from l in db.Watches.Where(n => n.ClaimedIdentifier == User.Identity.Name)
                                    select l.Name).ToArray<string>();
-
+                System.Threading.Thread.Sleep(100);
                 SessionList sl = BillRepo.CollectBills("*", "Watches", filter);
 
                 return sl.Bills;

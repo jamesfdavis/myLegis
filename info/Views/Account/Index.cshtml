@@ -46,26 +46,54 @@
         <li class="active">myAccount</li>
     </ol>
     <div class="row">
-        <div class="col-md-8" style="margin-top: 5px;">
+        <div class="col-md-8" style="margin-top: 5px; display: none;" data-bind="visible : (Fetching())">
+            <ul class="list-group">
+                <span class="list-group-item">
+                    <p class="list-group-item-text">
+                        &nbsp;<img src="../Content/Img/ajax-loader.gif" />
+                        &nbsp;&nbsp;Loading!
+                    </p>
+                </span>
+            </ul>
+        </div>
+        <!-- Active Watchlist -->
+        <div class="col-md-8" style="margin-top: 5px; display: none;" data-bind="visible : (List().length > 0 && Loaded())">
             <h5 style="margin-left: 5px;">
                 Watch List</h5>
-            <div class="alert alert-warning alert-dismissable" style="display : none;" data-bind="visible : (Loaded && Empty)">
-               <span class="glyphicon glyphicon-info-sign"></span>
-                &nbsp;Your Watchlist is empty.
-            </div>
-            <ul class="list-group" data-bind="foreach: List, visible : List().length > 0">
+            <ul class="list-group" data-bind="foreach: List">
                 <a data-bind="attr { href: Location }" class="list-group-item">
                     <h5 class="list-group-item-heading" data-bind="text : Title">
                     </h5>
                     <span class="badge badge-primary" data-bind="text : Name"></span>
+                    <p class="list-group-item-text">
+                        &nbsp;<span style="font-size: 11px;" data-bind="text: Status"></span>
+                    </p>
+                </a>
+            </ul>
+        </div>
+        <!-- Empty Watchlist -->
+        <div class="col-md-8" style="display: none;" data-bind="visible : (List().length == 0 && Loaded())">
+            <div class="alert alert-info" style="display: none;" data-bind="visible : (Loaded && Empty)">
+                <span class="glyphicon glyphicon-info-sign"></span>&nbsp;Your Watchlist is empty.
+            </div>
+            <ul class="list-group">
+                <a href="#" class="list-group-item">
+                    <h5 class="list-group-item-heading">
+                        Watchlist (empty).
+                    </h5>
                     <p class="list-group-item-text">
                         &nbsp;
                     </p>
                 </a>
             </ul>
         </div>
-        <div class="col-md-4" style="margin-top: 15px;">
-            &nbsp;
+        <!-- Watch Tutorial -->
+        <div class="col-md-4" style="display: none;" data-bind="visible : (List().length == 0 && Loaded())">
+            <h5>
+                Watching a Bill</h5>
+            <img src="../Content/img/watch-button.png" alt="Watch Button" class="img-thumbnail" />
+            <p>
+                Watch a bill by pressing the Watch button at the top of the document.</p>
         </div>
     </div>
     <div class="footer">

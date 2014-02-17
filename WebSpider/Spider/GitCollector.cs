@@ -94,16 +94,15 @@ namespace myLegis.Spider
                 if (!String.IsNullOrEmpty(data))
                 {
 
+                    string str = r.Key.ToString();
                     if ((this.kvp.Where(n => n.Key == r.Key.ToString()).Count() == 0))
                     {
                         this.kvp.Add(r.Key.ToString(), data);
-
                     }
                     else
                     {
                         //Figure out why we have had a conflict
                         string stp = @"";
-
                     }
                 }
 

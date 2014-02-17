@@ -201,7 +201,14 @@ namespace info.Models
                     DateTime? lstAct = (from a in gb.Activity.OrderByDescending(n => n.Date)
                                         select a.Date).FirstOrDefault();
                     //Add Bill
-                    sl.Bills.Add(new ItemOverview { Location = d.Name, Name = gb.Name, Title = gb.ShortTitle, LastActivity = lstAct });
+                    sl.Bills.Add(new ItemOverview
+                    {
+                        Location = d.Name,
+                        Name = gb.Name,
+                        Title = gb.ShortTitle,
+                        LastActivity = lstAct,
+                        Status = gb.CurrentStatus
+                    });
                     fs.Close();
                     fs.Dispose();
                     fs = null;

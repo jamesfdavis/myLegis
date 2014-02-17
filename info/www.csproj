@@ -229,6 +229,7 @@
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="Content\img\ajax-loader.gif" />
     <Content Include="Content\img\aolW.png" />
     <Content Include="Content\img\blogger.png" />
     <Content Include="Content\img\claimid.png" />
@@ -250,6 +251,7 @@
     <Content Include="Content\img\technorati.png" />
     <Content Include="Content\img\verisign.png" />
     <Content Include="Content\img\vidoop.png" />
+    <Content Include="Content\img\watch-button.png" />
     <Content Include="Content\img\wordpress.png" />
     <Content Include="Content\img\yahooB.png" />
     <Content Include="Content\img\yahooW.png" />
@@ -368,7 +370,7 @@
         <WebProjectProperties>
           <UseIIS>False</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
-          <DevelopmentServerPort>2283</DevelopmentServerPort>
+          <DevelopmentServerPort>11264</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
           <IISUrl>
           </IISUrl>

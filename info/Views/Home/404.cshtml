@@ -16,7 +16,7 @@
                 <span class="sr-only">Toggle navigation</span> <span class="icon-bar"></span><span
                     class="icon-bar"></span><span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="#">myLegis</a>
+            <a class="navbar-brand" href="@Url.Action("Index", new { Controller = "Home" })">myLegis</a>
         </div>
         <div class="navbar-collapse collapse">
             @Html.Partial("_navbar-primary-navigation")
@@ -25,7 +25,7 @@
         <!--/.nav-collapse -->
     </div>
     <ol class="breadcrumb">
-        <li><a href="@Url.Action("Index")">Home</a> </li>
+        <li><a href="@Url.Action("Index", new { Controller = "Home" })">Home</a> </li>
         <li class="active">Resource Not Found</li>
     </ol>
     <div class="jumbotron">

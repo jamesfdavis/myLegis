@@ -1,20 +1,17 @@
 ﻿<ul class="nav navbar-nav navbar-right">
+
+
     @if (User.Identity.IsAuthenticated)
     {
-        <li class="dropdown">
+        <li>
             @if (User.IsInRole("Admin"))
             {
-                <a href="#" class="dropdown-toggle" data-toggle="dropdown">(admin) myAccount&nbsp;<b class="caret"></b></a>
+                <a href="@Url.Action("index", new { Controller = "acct" })">(admin) myAccount&nbsp;</a>
             }
             else
             {
-                <a href="#" class="dropdown-toggle" data-toggle="dropdown">myAccount&nbsp;<b class="caret"></b></a>
+                 <a href="@Url.Action("index", new { Controller = "acct" })">myAccount&nbsp;</a>
             }
-            <ul class="dropdown-menu">
-                <li><a href="@Url.Action("index", new { Controller = "acct" })">Account Home</a></li>
-                <li class="divider"></li>
-                <li><a href="@Url.Action("logoff", new { Controller = "acct" })">Log Out</a></li>
-            </ul>
         </li>
     }
     else

@@ -154,8 +154,8 @@ namespace info.Tests
         public void Run_Spider_On_Activity_Parsing_Using_iFollower_And_Saving_Using_GitCollector()
         {
 
-            DateTime Start = new DateTime(2014, 2, 12);
-            DateTime End = new DateTime(2014, 2, 14);
+            DateTime Start = new DateTime(2014, 1,1);
+            DateTime End = new DateTime(2015, 1, 1);
 
             WebSiteDownloaderOptions options =
                new WebSiteDownloaderOptions();
@@ -193,7 +193,7 @@ namespace info.Tests
             d.Add("Title", new Regex(@"(?<=<b>TITLE:</b>)[a-z,\s,\w,(,),"",',\-,;,.]{5,5000}", RegexOptions.IgnoreCase));
             d.Add("Short Title", new Regex(@"(?<=<b>SHORT TITLE:</b>)(.*)(?=</font>)", RegexOptions.IgnoreCase));
             d.Add("Status Date", new Regex(@"(?<=<b>STATUS DATE:</b>)[0-9,/\,\w\s]{5,50}", RegexOptions.IgnoreCase));
-            d.Add("Current Status", new Regex(@"(?<=<b>CURRENT STATUS:</b>)[a-z,\s,&,\ ,(,),/,0-9]{2,60}", RegexOptions.IgnoreCase));
+            d.Add("Current Status", new Regex(@"(?<=<b>CURRENT STATUS:</b>)[a-z,\s,&,;,\ ,(,),/,0-9]{2,60}", RegexOptions.IgnoreCase));
             d.Add("Sponsors", new Regex(@"(?<=<b>SPONSOR[(]S[)]:</b>)[a-z,\s,\w,(,),.,;,""]{5,800}", RegexOptions.IgnoreCase));
 
             //RegEx matching container.
@@ -206,12 +206,12 @@ namespace info.Tests
 
         }
 
-        //[TestMethod]
+        [TestMethod]
         public void Run_Spider_Inflate_And_Save_Results_To_GitHub()
         {
 
-            DateTime Start = new DateTime(2014, 2, 12);
-            DateTime End = new DateTime(2014, 2, 14);
+            DateTime Start = new DateTime(2014, 1, 1);
+            DateTime End = new DateTime(2015, 1, 1);
 
             WebSiteDownloaderOptions options =
              new WebSiteDownloaderOptions();

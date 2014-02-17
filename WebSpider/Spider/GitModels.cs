@@ -21,8 +21,20 @@ namespace myLegis.Spider.Models
         public string ShortTitle { get; set; }
         [XmlElement]
         public string StatusDate { get; set; }
-        [XmlElement]
+        [XmlIgnore]
         public string CurrentStatus { get; set; }
+        [XmlElement]
+        public XmlCDataSection StatusCopy {
+            get
+            {
+                XmlDocument doc = new XmlDocument();
+                return doc.CreateCDataSection(CurrentStatus);
+            }
+            set
+            {
+                CurrentStatus = value.Value;
+            }
+        }
         [XmlElement]
         public string Sponsors { get; set; }
         [XmlElement]
