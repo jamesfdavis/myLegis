@@ -154,8 +154,8 @@ namespace info.Tests
         public void Run_Spider_On_Activity_Parsing_Using_iFollower_And_Saving_Using_GitCollector()
         {
 
-            DateTime Start = new DateTime(2014, 1,1);
-            DateTime End = new DateTime(2015, 1, 1);
+            DateTime Start = new DateTime(2014, 2, 19);
+            DateTime End = new DateTime(2015, 2, 21);
 
             WebSiteDownloaderOptions options =
                new WebSiteDownloaderOptions();
@@ -210,8 +210,8 @@ namespace info.Tests
         public void Run_Spider_Inflate_And_Save_Results_To_GitHub()
         {
 
-            DateTime Start = new DateTime(2014, 1, 1);
-            DateTime End = new DateTime(2015, 1, 1);
+            DateTime Start = new DateTime(2014, 2, 19);
+            DateTime End = new DateTime(2015, 2, 21);
 
             WebSiteDownloaderOptions options =
              new WebSiteDownloaderOptions();

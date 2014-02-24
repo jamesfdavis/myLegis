@@ -13,9 +13,13 @@ using myLegis.Spider.Models;
 using myLegis.Spider;
 using info.Models;
 using System.Data.SqlClient;
+using System.Collections.Specialized;
+using System.Diagnostics;
 
 namespace info.Controllers
 {
+
+
     public class HomeController : Controller
     {
 
@@ -23,9 +27,32 @@ namespace info.Controllers
         public ActionResult Index()
         {
 
+            //// Create the source, if it does not already exist.
+            //if (!EventLog.SourceExists("MYEVENTSOURCE"))
+            //{
+            //    EventLog.CreateEventSource("MYEVENTSOURCE", "MYEVENTSOURCE");
+            //    Debug.WriteLine("CreatingEventSource");
+            //}
+            ////eventcreate /ID 1 /L APPLICATION /T INFORMATION  /SO MYEVENTSOURCE /D "My first log"
+            //// Create an EventLog instance and assign its source.
+            //EventLog myLog = new EventLog();
+            //myLog.Source = "MYEVENTSOURCE";
+
+            //// Write an informational entry to the event log.    
+            //myLog.WriteEntry("Writing to event log.");
+
+
+            QuartzDatastore qd = new QuartzDatastore();
+
+            if (qd.Jobs == null)
+            {
+                qd.ScheduleJob();
+            }
+
             return View();
 
         }
+
 
         [HttpGet]
         public ViewResult Search()

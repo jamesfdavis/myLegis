@@ -17,4 +17,8 @@ namespace info.Models.DTO
         public string WikiUrl { get; set; }
 
     }
+
+    public class QuartzJob { 
+    
+    }
 }
